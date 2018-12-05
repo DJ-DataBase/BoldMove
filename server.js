@@ -28,7 +28,7 @@ app.use(methodOverride((request, response) => {
 }))
 
 // set view
-app.set('view engine', 'ejs')
+// app.set('view engine', 'ejs')
 
 //database setup
 const client = new pg.Client(process.env.DATABASE_URL);
