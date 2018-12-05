@@ -27,3 +27,40 @@ app.get('*', (request, response) => response.status(404).send('This route does n
 
 // listening
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+function getLocation() {
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+  } else {
+    codeLatLng(lat, lng);
+  }
+}
+
+function geoSuccess(position) {
+  var lat = position.coords.latitude;
+  var lng = position.coords.longitude;
+  alert(`lat: ${lat} lng: ${lng}`);
+  codeLatLng(lat, lng);
+}
+
+
+codeLatLng (lat, lng) {
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&sensor=true&key${process.env.GEOCODE_API_KEY}`;
+
+  return superagent.get(url)
+    .then(result => {
+      const location = new Location(this.query, result);
+      // location.save()
+      (location => response.send(location));
+    })
+  }
+
+function Location(query, res) {
+  this.city = 'results.address_components.short_name[3]';
+  this.country = 'results.address_components.long_name[4]';
+}
+
+
+// function geoError() {
+//   alert("Geocoder failed.");
+// }
