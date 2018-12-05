@@ -2,7 +2,7 @@
   "name": "boldmove",
   "version": "1.0.0",
   "description": "You have packed up on made a change, now what? A traveller's app for surviving in a foriegn country!",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"

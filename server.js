@@ -2,7 +2,7 @@
 
 // app dependencies
 const express = require('express');
-const superagent = require('superagent');
+// const superagent = require('superagent');
 
 // load environment variables from .env files
 // require ('dotenv').config();
