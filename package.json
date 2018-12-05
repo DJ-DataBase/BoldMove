@@ -1,0 +1,26 @@
+{
+  "name": "boldmove",
+  "version": "1.0.0",
+  "description": "You have packed up on made a change, now what? A traveller's app for surviving in a foriegn country!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DJ-DataBase/BoldMove.git"
+  },
+  "author": "Dan U, Brent W, Dev S, Julie L",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DJ-DataBase/BoldMove/issues"
+  },
+  "homepage": "https://github.com/DJ-DataBase/BoldMove#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "pg": "^7.7.1",
+    "superagent": "^4.0.0"
+  }
+}
