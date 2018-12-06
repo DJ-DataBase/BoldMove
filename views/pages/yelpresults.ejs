@@ -10,16 +10,17 @@
   <h1>Bold Move</h1>
   <h3>~Menu~</h3>
   <ul>
-  <!-- will need a forEach here to cycle through all the saved ones from the  returned list from Yelp-->
-    <li>
-      <!-- this will probably change base on what is in the object and these need to be updated with <% %> -->
-      <section></section>
-        <h4>Name</h4>
-        <span>URL</span>
-        <span>Rating</span>
-        <span>Price</span>
-      </section>
-      <img> <!--image URL-->
+    <%searchResults.forEach( yelp = > {%>
+      <li>
+        <section></section>
+          <h4><%= yelp.name %></h4>
+          <span>URL</span>
+            <p><%= yelp.url%></p>
+          <span>Rating</span>
+            <p><%= yelp.rating%></p>
+          <span>Price</span>
+            <p><%= yelp.price%></p>
+        </section>
       <form action="/add" method="post">
         <button type="submit">+</button>
       </form>

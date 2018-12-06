@@ -17,21 +17,24 @@
   </form>
   <p>Saved Previous Searches: </p>
   <ul>
-    <!-- will need a forEach here to cycle through all the saved ones from the  SQL list-->
-    <li>
-      <!-- this will probably change base on what is in the object and these need to be updated with <% %> -->
-      <section></section>
-        <h4>Name</h4>
-        <span>URL</span>
-        <span>Rating</span>
-        <span>Price</span>
-      </section>
-      <img> <!--image URL-->
-      <form action="" method="post">
-          <input type="hidden" name="_method" value="delete">
-          <button type="submit">X</button>
-      </form>
-    </li>
+    <% yelpDBRestuls.forEach( yelp = > {%>
+      <li>
+        <section></section>
+          <h4><%= yelp.name %></h4>
+          <span>URL</span>
+            <p><%= yelp.url%></p>
+          <span>Rating</span>
+            <p><%= yelp.rating%></p>
+          <span>Price</span>
+            <p><%= yelp.price%></p>
+        </section>
+        <img src="<%= yelp.image_url %>"> 
+        <form action="" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit">X</button>
+        </form>
+      </li>
+    <% }) %>
   </ul>
 </body>
 </html>
