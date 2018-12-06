@@ -9,23 +9,32 @@
   </header>
 
 <main>
+  <h1>Weather</h1>
+  <div class="main-weather"></div>
+  <ul class="weather-results">
+    <% results.forEach(weather => { %>
+          <section id="today">
+            <h3><%= weather.currentTemp %></h3>
+            <p><%= weather.currentPrecip %></p>
+            <p><%= weather.currentSummary %></p>
+          </section>
+          <section>
+            <h3><%= weather.tomorrowHigh %></h3>
+            <h3><%= weather.tomorrowLow %></h3>
+            <p><%= weather.tomorrowPrecip %></p>
+            <p><%= weather.tomorrowSummary %></p>
+          </section>
+          <section>
+            <h3><%= weather.dayAfterTomHigh %></h3>
+            <h3><%= weather.dayAfterTomLow %></h3>
+            <p><%= weather.dayAfterTomprecip %></p>
+            <p><%= weather.dayAfterTomSummary %></p>
+          </section>
 
-    <section>
-      <div class = '' id="">
-          <h1></h1>
-            <p></p>
-          <img>
-      </div>
-    </section>
-
-
-    <section>
-        <div class = '' id="">
-            <h1></h1>
-              <p></p>
-            <img>
         </div>
-      </section>
+      </li>
+      <% }) %>
+  </ul>
   
   </main>
   <footer>
