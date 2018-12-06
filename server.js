@@ -40,16 +40,29 @@ app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
 function getLocation (request, response) {
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`; 
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
   //Run through constructor to add info
 
   return superagent.get(url)
     .then(res => {
       const location = new Location(request.body.city, res);
       location.save()
+        .then(getRestCountry(res.body.results[0].address_components[2].long_name))
         .then(location => response.send(location));
     })
     .catch(error => handleError(error));
+}
+
+function getRestCountry (country) {
+  const url = `https://restcountries.eu/${country}/v2/all`;
+
+  return superagent.get(url) 
+    .then (results => {
+      const restCountry = new RestCountryObj(results);
+      restCountry.save(country);
+    })
+
+
 }
 
 function Location(query, res) {
@@ -65,6 +78,24 @@ Location.tableName = 'locations';
 Location.prototype.save = function () {
   const SQL = `INSERT INTO locations (city_name, country_name, latitude, longitude) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING RETURNING id;`;
   const values = [this.cityName, this.countryName, this.latitude, this.longitude];
+
+  return client.query(SQL, values)
+    .then(result => {
+      this.id = result.rows[0].id;
+      return this;
+    });
+}
+
+function RestCountryObj(request) {
+  this.currencyCode = request[0].currencies[0].code;
+  this.currencySymbol = request[0].currencies[0].symbol;
+  this.languageCode = request.languages[0].iso639_1;
+  this.created_at = Date.now();
+  console.log('this', this);
+}
+RestCountryObj.prototype.save = function (location_name) {
+  const SQL = `UPDATE locations SET currency_code=$1 currency_symbol=$2 lang_code=$3 WHERE country_name=$4;`;
+  const values = [this.currencyCode, this.currencySymbol, this.languageCode, location_name];
 
   return client.query(SQL, values)
     .then(result => {
