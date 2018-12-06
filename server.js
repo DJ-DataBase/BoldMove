@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 app.use(cors())
 
+app.use(express.urlencoded({extended:true}));
 app.use(express.static('public'));
 app.use(express.static('public/styles'))
 
@@ -28,19 +29,23 @@ app.set('view engine', 'ejs')
 app.get('/', (request, response) => {
   response.render('pages/index');
 })
+
+//routes
 app.post('/location', getLocation);
 app.get('*', (request, response) => response.status(404).send('This route does not exist.'));
 
 // listening
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
+
+
 function getLocation (request, response) {
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${this.query}&key=${process.env.GEOCODE_API_KEY}`; 
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`; 
   //Run through constructor to add info
 
   return superagent.get(url)
     .then(res => {
-      const location = new Location(this.query, res);
+      const location = new Location(request.body.city, res);
       location.save()
         .then(location => response.send(location));
     })
@@ -58,11 +63,11 @@ function Location(query, res) {
 Location.tableName = 'locations';
 
 Location.prototype.save = function () {
-  const SQL = `INSTER INTO locations (city_name, country_name, latitude, longitude) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING RETURNING id;`;
+  const SQL = `INSERT INTO locations (city_name, country_name, latitude, longitude) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING RETURNING id;`;
   const values = [this.cityName, this.countryName, this.latitude, this.longitude];
 
   return client.query(SQL, values)
-    .ten(result => {
+    .then(result => {
       this.id = result.rows[0].id;
       return this;
     });
