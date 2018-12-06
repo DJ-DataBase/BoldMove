@@ -5,7 +5,7 @@ const express = require('express');
 // const superagent = require('superagent');
 
 // load environment variables from .env files
-// require ('dotenv').config();
+require ('dotenv').config();
 
 // app setup
 const PORT = process.env.PORT || 4000;
@@ -28,11 +28,12 @@ app.get('*', (request, response) => response.status(404).send('This route does n
 // listening
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
+
 function getLocation() {
   if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError); //look into geoerror
   } else {
-    codeLatLng(lat, lng);
+    codeLatLng(lat, lng); // message to prompt for manual entry
   }
 }
 
@@ -40,24 +41,34 @@ function geoSuccess(position) {
   var lat = position.coords.latitude;
   var lng = position.coords.longitude;
   alert(`lat: ${lat} lng: ${lng}`);
-  codeLatLng(lat, lng);
+  cityLocation(lat, lng);
 }
 
 
-codeLatLng (lat, lng) {
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&sensor=true&key${process.env.GEOCODE_API_KEY}`;
+cityLocation (lat, lng) {
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&sensor=true&key${process.env.GEOCODE_API_KEY}`; 
+  //Run through constructor to add info
+
+
 
   return superagent.get(url)
     .then(result => {
-      const location = new Location(this.query, result);
+      const location = new Location(result); //remove this.query.. will need to add when user input is added 
       // location.save()
       (location => response.send(location));
     })
   }
 
-function Location(query, res) {
-  this.city = 'results.address_components.short_name[3]';
-  this.country = 'results.address_components.long_name[4]';
+function Location(res) {
+  this.tableName = 'locations';
+  this.latitude = res.body.results[0].geometry.location.lat;
+  this.longitude = res.body.results[0].geometry.location.lng;
+  this.created_at = Date.now();
+  this.cityName = res.body.results[0].address_components[2].long_name;
+  this.countryName = res.body.results[0].address_components[6].long_name;
+
+
+
 }
 
 
