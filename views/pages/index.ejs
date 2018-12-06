@@ -1,23 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Bold Move</title>
 </head>
 <body>
   <h1>Bold Move</h1>
   <h3>~Home~</h3>
-  <form>
+  <form action="/location" method="post">
     <fieldset>
       <label>
-        <p>According to our records you are: HERE</p>
-        <!-- HERE will be replaced with <% GPS location %> -->
-        <p>OR</p>
         <span>Please enter a location: </span>
         <input type="text" name="location" id="search-input" required>
       </label>
+      <button type="submit" id="search-button">Make your move!</button>
     </fieldset>
   </form>
 </body>
