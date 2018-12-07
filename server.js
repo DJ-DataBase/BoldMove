@@ -32,9 +32,9 @@ app.get('/', (request, response) => {
 app.get('/menu', (request, response) => {
   response.render('pages/menu');
 })
-app.get('/currency', (request, response) => {
-  response.render('pages/currency');
-})
+app.post('/currency', currencyConvert);
+
+
 app.get('/weather', (request, response) => {
   response.render('pages/weather');
 })
@@ -59,10 +59,11 @@ function currencyPage(req, res) {
   res.render('pages/currency');
 }
 
+
 function getLocation (request, response) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
-  //Run through constructor to add info
-
+  Location.currentLocation = request.body.city;
+  console.log(Location.currentLocation);
   return superagent.get(url)
     .then(res => {
       const location = new Location(request.body.city, res);
@@ -72,6 +73,7 @@ function getLocation (request, response) {
     })
     .catch(error => handleError(error));
 }
+
 
 function getRestCountry (country) {
   const url = `https://restcountries.eu/rest/v2/name/${country}?fullText=true`;
@@ -97,6 +99,27 @@ function getTranslation (request, response) {
     })
     .catch(console.error('error happened'))
 }
+
+
+function currencyConvert (request, response) {
+  
+  const SQL = `SELECT DISTINCT currency_code FROM locations WHERE city_name = '${Location.currentLocation}';`;
+  return client.query(SQL)
+    .then(currencyCode => {
+      console.log('full rows', currencyCode.rows);
+      let currCode = currencyCode.rows[0].currency_code;
+      const url = `https://currency-exchange.apphb.com/api/rates?apikey=a84e43b27f20e6645157b29a42f1a25c&provider=currencylayer&fr=USD&to=${currCode}`;
+      
+      superagent.get(url)
+        .then(res => {
+          let result = res.body * request.body.currencyReturn;
+          console.log(result)
+          response.render('pages/currencyResult', {resultShow : result})  
+        })
+      })
+    .catch(console.error('error happened'))
+}
+
 
 function showYelpForm (req, res) {
   let SQL = 'SELECT * FROM yelp;';
@@ -145,7 +168,7 @@ function Location(query, res) {
 }
 
 Location.tableName = 'locations';
-Location.currentLocation = '';
+
 
 Location.prototype.save = function () {
   const SQL = `INSERT INTO locations (city_name, country_name, latitude, longitude) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING RETURNING id;`;
