@@ -9,21 +9,16 @@
     </header>
 
   <main>
-    <div class = '' id=""></div>
-        <form action="/translate" method="POST">
-          
-          <input class = "" type="text" placeholder = "Type your text" />                 
+    <p></p>
 
-            <fieldset >
-                  <button type= 'submit'>Submit</button>
-            </fieldset>
-        </form>
-
-        <p id=""></p>
-
-
-        
-    </div>
+        <div>
+            <form action="/translate" method="POST">
+            <input type="text" name="pleaseTranslate" placeholder = "Type your text" />
+                <fieldset>
+                    <button type="submit">Translate</button>
+                </fieldset>
+            </form>        
+        </div>
     </main>
     <footer>
         <%- include('../layout/footer') %>

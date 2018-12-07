@@ -29,41 +29,67 @@ app.set('view engine', 'ejs')
 app.get('/', (request, response) => {
   response.render('pages/index');
 })
+app.get('/menu', (request, response) => {
+  response.render('pages/menu');
+})
+app.get('/currency', (request, response) => {
+  response.render('pages/currency');
+})
+app.get('/weather', (request, response) => {
+  response.render('pages/weather');
+})
+app.get('/translatePage', (request, response) => {
+  response.render('pages/translate')
+})
 
 //routes
 app.post('/location', getLocation);
+app.post('/translate', getTranslation);
 app.get('*', (request, response) => response.status(404).send('This route does not exist.'));
 
 // listening
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
-
 function getLocation (request, response) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
   //Run through constructor to add info
-
+  Location.currentLocation = request.body.city;
   return superagent.get(url)
     .then(res => {
       const location = new Location(request.body.city, res);
       location.save()
         .then(getRestCountry(res.body.results[0].address_components[res.body.results[0].address_components.length - 1].long_name))
-        .then(location => response.send(location));
+        .then(response.redirect('/menu'));
     })
     .catch(error => handleError(error));
 }
 
 function getRestCountry (country) {
-  const url = `https://restcountries.eu/rest/v2/name/${country}?fullText=true`;
-  console.log('country', country);
+  const url = `https://restcountries.eu/rest/v2/name/${country}`;
   return superagent.get(url)
     .then (results => {
       const restCountry = new RestCountryObj(results.body);
       restCountry.save(country);
     })
-
-
 }
+
+function getTranslation (request, response) {
+  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${Location.currentLocation}';`;
+  client.query(SQL)
+    .then(result => {
+      const url = `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_TRANSLATE_API}&q=${request.body.pleaseTranslate}?&target=${result.rows[0].lang_code}`;
+      superagent.post(url)
+        .then(res => {
+          let translatedString = res.body.data.translations[0].translatedText;
+          console.log('this is our results:', translatedString)
+          response.render('./pages/translate.ejs', {translate: translatedString})
+        });
+      // .then(response.redirect('pages/translate'))
+    })
+    .catch(console.error('error happened'))
+}
+
 
 function Location(query, res) {
   this.tableName = 'locations';
@@ -74,6 +100,7 @@ function Location(query, res) {
 }
 
 Location.tableName = 'locations';
+Location.currentLocation = '';
 
 Location.prototype.save = function () {
   const SQL = `INSERT INTO locations (city_name, country_name, latitude, longitude) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING RETURNING id;`;
@@ -91,37 +118,18 @@ function RestCountryObj(request) {
   this.currencySymbol = request[0].currencies[0].symbol;
   this.languageCode = request[0].languages[0].iso639_1;
   this.created_at = Date.now();
-  console.log('restcountry object', this);
 }
+
 RestCountryObj.prototype.save = function (location_name) {
-  console.log('in restcountry save function');
   const SQL = `UPDATE locations SET currency_code=$1, currency_symbol=$2, lang_code=$3 WHERE country_name=$4;`;
   const values = [this.currencyCode, this.currencySymbol, this.languageCode, location_name];
 
   return client.query(SQL, values)
-    // .then(result => {
-    //   this.id = result.rows[0].id;
-    //   return this;
-    // });
+  // .then(result => {
+  //   this.id = result.rows[0].id;
+  //   return this;
+  // });
 }
-
-//weather model
-// <<<< TODO - adjust this. to be accurate to information we care about
-// function Weather(day) {
-//   this.tableName = 'weather';
-//   this.created_at = Date.now();
-//   this.time = new Date(day.time * 1000).toString().slice(0, 15);
-//   this.forecast = day.summary;
-// }
-
-// function Yelp(attraction) {
-//   this.tableName = 'attraction';
-//   this.created_at = Date.now();
-//   this.name =
-//   this.url = 
-//   this.rating =
-//   this.address =
-// }
 
 //helper functions
 function lookup(options) {
