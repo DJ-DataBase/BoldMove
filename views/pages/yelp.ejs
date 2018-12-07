@@ -30,9 +30,9 @@
             <p><%= yelp.price%></p>
         </section>
         <img src="<%= yelp.image_url %>"> 
-        <form action="" method="post">
+        <form action="/yelpDelete/<%= yelp.id %>" method="post">
             <input type="hidden" name="_method" value="delete">
-            <button type="submit">X</button>
+            <button type="submit">Delete from your Yelp list</button>
         </form>
       </li>
     <% }) %>
