@@ -96,7 +96,6 @@ function getTranslation (request, response) {
           console.log('this is our results:', translatedString)
           response.render('./pages/translate.ejs', {translate: newTranString})
         });
-      // .then(response.redirect('pages/translate'))
     })
     .catch(error => handleError(error));
 }
