@@ -68,7 +68,7 @@ function getLocation (request, response) {
       const location = new Location(request.body.city, res);
       location.save()
         .then(getRestCountry(res.body.results[0].address_components[res.body.results[0].address_components.length - 1].long_name))
-        .then(location => response.send(location));
+        .then(response.redirect('/menu'));
     })
     .catch(error => handleError(error));
 }
