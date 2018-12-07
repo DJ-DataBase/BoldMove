@@ -30,13 +30,21 @@ app.get('/', (request, response) => {
   response.render('pages/index');
 })
 
+
 //routes
 app.post('/location', getLocation);
+
+
 app.get('*', (request, response) => response.status(404).send('This route does not exist.'));
 
 // listening
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
+app.post('/currencyForm', currencyPage);
+
+function currencyPage(req, res) {
+  res.render('pages/currency');
+}
 
 
 function getLocation (request, response) {
@@ -48,7 +56,8 @@ function getLocation (request, response) {
       const location = new Location(request.body.city, res);
       location.save()
         .then(getRestCountry(res.body.results[0].address_components[res.body.results[0].address_components.length - 1].long_name))
-        .then(location => response.send(location));
+        // .then(location => response.send(location))
+        .then(response.render('pages/menu'))
     })
     .catch(error => handleError(error));
 }
@@ -62,11 +71,11 @@ function getRestCountry (country) {
       restCountry.save(country);
     })
 
-
 }
 
 function Location(query, res) {
   this.tableName = 'locations';
+  console.log(res.body);
   this.latitude = res.body.results[0].geometry.location.lat;
   this.longitude = res.body.results[0].geometry.location.lng;
   this.cityName = query;
