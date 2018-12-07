@@ -30,6 +30,8 @@ app.get('/', (request, response) => {
   response.render('pages/index');
 })
 
+
+
 //routes
 app.post('/location', getLocation);
 app.get('*', (request, response) => response.status(404).send('This route does not exist.'));
@@ -99,41 +101,106 @@ RestCountryObj.prototype.save = function (location_name) {
   const values = [this.currencyCode, this.currencySymbol, this.languageCode, location_name];
 
   return client.query(SQL, values)
-    // .then(result => {
-    //   this.id = result.rows[0].id;
-    //   return this;
-    // });
+  // .then(result => {
+  //   this.id = result.rows[0].id;
+  //   return this;
+  // });
+}
+/////WEATHER//////////////////////////////////////////////////////////////
+app.get('/pages/weather', getWeather);
+
+function Weather(day) {
+  this.tableName = 'forecasts';
+  this.currentTemp = day.res[0].currently.temperature;
+  this.currentPrecip = day.res[0].currently.precipProbability;
+  this.currentSummary = day.res[0].currently.summary;
+  this.tomorrowHigh = day.res[0].daily.data[0].temperatureHigh;
+  this.tomorrowLow = day.res[0].daily.data[0].temperatureLow;
+  this.tomorrowPrecip = day.res[0].daily.data[0].precipProbability;
+  this.time = new Date(day.time * 1000).toString().slice(0, 15);
+  this.created_at = Date.now();
 }
 
-//weather model
-// <<<< TODO - adjust this. to be accurate to information we care about
-// function Weather(day) {
-//   this.tableName = 'weather';
-//   this.created_at = Date.now();
-//   this.time = new Date(day.time * 1000).toString().slice(0, 15);
-//   this.forecast = day.summary;
+Weather.tableName = 'forecasts';
+Weather.lookup = lookup;
+// Weather.deleteByLocationId = deleteByLocationId;
+
+Weather.prototype = {
+  save: function (location_id) {
+    const SQL = `INSERT INTO ${this.tableName} (current_temp, current_precip, current_summary, tomorrow_high, tomorrow_low, tomorrow_precip, time, created_at, location_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
+    const values = [this.currentTemp, this.currentPrecip, this.currentSummary, this.tomorrowHigh, this.tomorrowLow, this.tomorrowPrecip, this.time, this.created_at, this.location_id];
+
+    client.query(SQL, values);
+  }
+}
+
+function getWeather(request, response) {
+  Weather.lookup({
+    tableName: Weather.tableName,
+
+    location: request.query.data.id,
+
+    cacheHit: function (result) {
+      let ageOfResultsInMinutes = (Date.now() - result.rows[0].created_at) / (1000 * 60);
+      if (ageOfResultsInMinutes > 30) {
+        // Weather.deleteByLocationId(Weather.tableName, request.query.data.id);
+        this.cacheMiss();
+      } else {
+        response.send(result.rows);
+      }
+    },
+
+    cacheMiss: function () {
+      const url = `https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${-51.51},${-0.13}`;
+
+      return superagent.get(url)
+        .then(result => {
+          const weatherSummaries = result.body.daily.data.map(day => {
+            const summary = new Weather(day);
+            summary.save(request.query.data.id);
+            return summary;
+          });
+          response.send(weatherSummaries);
+        })
+        .catch(error => handleError(error, response));
+    }
+  })
+}
+
+// function deleteByLocationId(table, city) {
+//   const SQL = `DELETE from ${table} WHERE location_id=${city};`;
+//   return client.query(SQL);
 // }
+
+
+
+//////END WEATHER///////////////////////////////////////////////
+
 
 // function Yelp(attraction) {
 //   this.tableName = 'attraction';
 //   this.created_at = Date.now();
 //   this.name =
-//   this.url = 
+//   this.url =
 //   this.rating =
 //   this.address =
 // }
 
 //helper functions
+
 function lookup(options) {
-  const SQL =  `SELECT * FROM ${options.tableName} WHERE location_id=$1;`;
+  const SQL = `SELECT * FROM ${options.tableName} WHERE location_id=$1;`;
   const values = [options.location];
 
   client.query(SQL, values)
     .then(result => {
       if (result.rowCount > 0) {
-        options.cache
+        options.cacheHit(result);
+      } else {
+        options.cacheMiss();
       }
     })
+    .catch(error => handleError(error));
 }
 
 function handleError(err, res) {
