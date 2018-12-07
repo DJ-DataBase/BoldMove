@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS locations (
     tomorrow_precip VARCHAR(255),
     time VARCHAR(255),
     created_at BIGINT,
-    location_id INTEGER NOT NULL REFERENCES locations(id)
+    location_id VARCHAR(255)
   );
 
   CREATE TABLE IF NOT EXISTS yelp (
@@ -38,3 +38,4 @@ VALUES('paris', 'France', 48.8566, 2.3522, 'EUR', '€', 'fr');
 
 INSERT INTO yelp (name, created_at, rating, price, image_url) 
 VALUES('fake result', 1544208724559, 2, '$', 'https://s3-media3.fl.yelpcdn.com/bphoto/ijju-wYoRAxWjHPTCxyQGQ/o.jpg');
+

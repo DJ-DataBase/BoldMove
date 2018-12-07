@@ -12,7 +12,6 @@
   <h1>Weather</h1>
   <div class="main-weather"></div>
   <ul class="weather-results">
-    <% results.forEach(weather => { %>
           <section id="today">
             <h3><%= weather.currentTemp %></h3>
             <p><%= weather.currentPrecip %></p>
@@ -24,16 +23,9 @@
             <p><%= weather.tomorrowPrecip %></p>
             <p><%= weather.tomorrowSummary %></p>
           </section>
-          <section>
-            <h3><%= weather.dayAfterTomHigh %></h3>
-            <h3><%= weather.dayAfterTomLow %></h3>
-            <p><%= weather.dayAfterTomprecip %></p>
-            <p><%= weather.dayAfterTomSummary %></p>
-          </section>
 
         </div>
       </li>
-      <% }) %>
   </ul>
   
   </main>
