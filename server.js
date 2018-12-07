@@ -39,7 +39,9 @@ app.get('/translatePage', (request, response) => {
   response.render('pages/translate')
 })
 app.get('/yelp', showYelpForm);
-app.get('/yelpresults', showYelpResults);
+app.post('/yelpSearch', showYelpResults);
+app.post('/yelpAdd', addYelptoSave);
+app.post('/yelpDelete/:yelp_id',deleteYelp);
 
 //routes
 app.post('/location', getLocation);
@@ -96,7 +98,7 @@ function getTranslation (request, response) {
     })
     .catch(console.error('error happened'))
 }
-
+//verified the show saved works
 function showYelpForm (req, res) {
   let SQL = 'SELECT * FROM yelp;';
 
@@ -108,30 +110,47 @@ function showYelpForm (req, res) {
 }
 
 function showYelpResults (req, res) {
-  let SQL = 'SELECT * FROM boldmove WHERE city_name=$1;';
+  let SQL = 'SELECT latitude, longitude FROM locations WHERE city_name=$1;';
   // let values = [req.params.city];
   let values = ['paris'];
-  console.log('in get yelp result function');
 
-  return client.query(SQL, values)
+  client.query(SQL, values)
     .then( result => {
-      const url = `https://api.yelp.com/v3/businesses/search?term=burger&latitude=${result.row[0].latitude}&longitude=${result.row[0].longitude}`;
+      const url = `https://api.yelp.com/v3/businesses/search?term=${req.body.yelpSearchInquiry}&latitude=${result.rows[0].latitude}&longitude=${result.rows[0].longitude}`;
+      // console.log('yelp url', url);
 
-      return superagent.get(url)
+      superagent.get(url)
         .set('Authorization', `Bearer ${process.env.YELP_API_KEY}`)
-        .then(yelpResult => {
-          console.log('in get yelp result superagent function');
-          const yelpSummaries = yelpResult.body.businesses.map(place => {
-            const summary = new YelpObj(place);
-            console.log('location id', req.query.data);
-            summary.save(req.query.data.id);
-            return summary;
+        .then(yelpResponse => {
+          const yelpSummaries = yelpResponse.body.businesses.map(place => {
+            return new YelpObj(place);
           });
-          res.render('pages/yelpresults',{searchResults: yelpResult});
-          res.send(yelpSummaries);
+          // console.log('yelpsummaries', yelpSummaries);
+          res.render('pages/yelpresults',{searchResults: yelpSummaries})
         })
         .catch(error => handleError(error, res));
     })
+}
+
+function addYelptoSave (req, res) {
+  let {name, created_at, rating, price, image_url} = req.body;
+
+  let SQL = 'INSERT INTO yelp(name, created_at, rating, price, image_url) VALUES ($1, $2, $3, $4, $5);';
+  let values = [name, created_at, rating, price, image_url];
+
+  return client.query(SQL, values)
+    .then(res.redirect('/yelp'))
+    .catch(handleError);
+}
+
+function deleteYelp (req, res) {
+  let SQL = 'DELETE FROM yelp WHERE id=$1;';
+  // console.log('request param', req.params.yelp_id)
+  let values = [req.params.yelp_id];
+
+  return client.query(SQL, values)
+    .then(res.redirect('/yelp'))
+    .catch(handleError);
 }
 
 
@@ -195,6 +214,17 @@ Weather.prototype.save = function() {
   client.query(SQL, values);
 }
 
+function YelpObj(place) {
+  this.tableName = 'yelp';
+  this.url = place.url;
+  this.name = place.name;
+  this.rating = place.rating;
+  this.price = place.price;
+  this.image_url = place.image_url;
+  this.created_at = Date.now();
+  console.log('yelpobj', this);
+}
+
 function getWeather(request, response) {
   const SQL = `SELECT latitude, longitude FROM locations WHERE city_name = '${currentLocation}';`;
   client.query(SQL)
@@ -221,3 +251,11 @@ function handleError(err, res) {
   console.error(err);
   if (res) res.satus(500).send('Error encountered.');
 }
+
+
+// Clear the DB data for a location if it is stale
+function deleteByLocationId(table, city) {
+  const SQL = `DELETE from ${table} WHERE location_id=${city};`;
+  return client.query(SQL);
+}
+

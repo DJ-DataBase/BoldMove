@@ -7,11 +7,11 @@
   <title>Bold Move</title>
 </head>
 <body>
-  <form action="/yelpresults" method="get">
+  <form action="/yelpSearch" method="POST">
     <fieldset>
       <label>
         <span>Search: </span>
-        <input type="text" name="location" id="search-input" required>
+        <input type="text" name="yelpSearchInquiry" id="search-input" required>
       </label>
       <button type="submit">Search</button>
     </fieldset>
@@ -30,9 +30,9 @@
             <p><%= yelp.price%></p>
         </section>
         <img src="<%= yelp.image_url %>"> 
-        <form action="" method="post">
+        <form action="/yelpDelete/<%= yelp.id %>" method="post">
             <input type="hidden" name="_method" value="delete">
-            <button type="submit">X</button>
+            <button type="submit">Delete from your Yelp list</button>
         </form>
       </li>
     <% }) %>
