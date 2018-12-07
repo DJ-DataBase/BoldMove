@@ -42,7 +42,7 @@ app.get('/translatePage', (request, response) => {
   response.render('pages/translate')
 })
 app.get('/yelp', showYelpForm);
-app.get('/yelpresults', showYelpResults);
+app.post('/yelpSearch', showYelpResults);
 
 //routes
 app.post('/location', getLocation);
@@ -97,7 +97,7 @@ function getTranslation (request, response) {
     })
     .catch(console.error('error happened'))
 }
-
+//verified the show saved works
 function showYelpForm (req, res) {
   let SQL = 'SELECT * FROM yelp;';
 
@@ -109,28 +109,36 @@ function showYelpForm (req, res) {
 }
 
 function showYelpResults (req, res) {
-  let SQL = 'SELECT * FROM boldmove WHERE city_name=$1;';
+  let SQL = 'SELECT latitude, longitude FROM locations WHERE city_name=$1;';
   // let values = [req.params.city];
   let values = ['paris'];
-  console.log('in get yelp result function');
+  // console.log('in get yelp result function');
 
-  return client.query(SQL, values)
+  client.query(SQL, values)
     .then( result => {
-      const url = `https://api.yelp.com/v3/businesses/search?term=burger&latitude=${result.row[0].latitude}&longitude=${result.row[0].longitude}`;
+      // console.log('in clientquery of show yelp restuls');
+      // console.log('req in showyelp', req.body.yelpSearchInquiry);
+      const url = `https://api.yelp.com/v3/businesses/search?term=${req.body.yelpSearchInquiry}&latitude=${result.rows[0].latitude}&longitude=${result.rows[0].longitude}`;
+      console.log('yelp url', url);
 
-      return superagent.get(url)
+      superagent.get(url)
         .set('Authorization', `Bearer ${process.env.YELP_API_KEY}`)
-        .then(yelpResult => {
-          console.log('in get yelp result superagent function');
-          const yelpSummaries = yelpResult.body.businesses.map(place => {
-            const summary = new YelpObj(place);
-            console.log('location id', req.query.data);
-            summary.save(req.query.data.id);
-            return summary;
+        .then(yelpResponse => {
+          // console.log('in get yelp result superagent function');
+          const yelpSummaries = yelpResponse.body.businesses.map(place => {
+            return new YelpObj(place);
+            // console.log('after object created', tempthing);
+            // console.log('location id', req.query);
+            // summary.save(req.query.data.id);
+            // return summary;
           });
-          res.render('pages/yelpresults',{searchResults: yelpResult});
-          res.send(yelpSummaries);
+          console.log('yelpsummaries', yelpSummaries);
+          res.render('pages/yelpresults',{searchResults: yelpSummaries})
         })
+        // .then(result => {
+        //   console.log('result', result);
+        //   res.render('pages/yelpresults',{searchResults: result})})
+        // // res.send(yelpSummaries);
         .catch(error => handleError(error, res));
     })
 }
@@ -200,6 +208,26 @@ Weather.prototype = {
   }
 }
 
+function YelpObj(place) {
+  this.tableName = 'yelp';
+  this.url = place.url;
+  this.name = place.name;
+  this.rating = place.rating;
+  this.price = place.price;
+  this.image_url = place.image_url;
+  this.created_at = Date.now();
+  // console.log('yelpobj', this);
+}
+YelpObj.tableName = 'yelp';
+YelpObj.lookup = lookup;
+YelpObj.deleteByLocationId = deleteByLocationId;
+YelpObj.prototype.save = function (location_id) {
+  const SQL = `INSERT INTO ${this.tableName} (url, name, created_at, rating, price, image_url, location_id) VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+  const values = [this.url, this.name, this.created_at, this.rating, this.price, this.image_url, location_id];
+
+  client.query(SQL, values);
+}
+
 function getWeather(request, response) {
   Weather.lookup({
     tableName: Weather.tableName,
@@ -253,4 +281,10 @@ function lookup(options) {
 function handleError(err, res) {
   console.error(err);
   if (res) res.satus(500).send('Error encountered.');
+}
+
+// Clear the DB data for a location if it is stale
+function deleteByLocationId(table, city) {
+  const SQL = `DELETE from ${table} WHERE location_id=${city};`;
+  return client.query(SQL);
 }

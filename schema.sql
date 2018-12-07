@@ -1,4 +1,4 @@
-DROP TABLE locations;
+DROP TABLE locations, forecasts, yelp;
 
 CREATE TABLE IF NOT EXISTS locations (
     id SERIAL PRIMARY KEY,
@@ -23,3 +23,19 @@ CREATE TABLE IF NOT EXISTS locations (
     created_at BIGINT,
     location_id INTEGER NOT NULL REFERENCES locations(id)
   );
+
+  CREATE TABLE IF NOT EXISTS yelp (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255), 
+    created_at BIGINT,
+    rating NUMERIC(3, 0),
+    price VARCHAR(255),
+    image_url VARCHAR(255),
+    location_id INTEGER NOT NULL REFERENCES locations(id)
+  );
+
+INSERT INTO locations (city_name, country_name, latitude, longitude, currency_code, currency_symbol, lang_code) 
+VALUES('paris', 'France', 48.8566, 2.3522, 'EUR', '€', 'fr');
+
+INSERT INTO yelp (name, created_at, rating, price, image_url, location_id) 
+VALUES('fake result', 1544208724559, 2, '$', 'https://s3-media3.fl.yelpcdn.com/bphoto/ijju-wYoRAxWjHPTCxyQGQ/o.jpg', 1);
