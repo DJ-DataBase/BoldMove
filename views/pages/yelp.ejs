@@ -7,17 +7,18 @@
   <title>Bold Move</title>
 </head>
 <body>
-  <form>
+  <form action="/yelpresults" method="get">
     <fieldset>
       <label>
         <span>Search: </span>
         <input type="text" name="location" id="search-input" required>
       </label>
+      <button type="submit">Search</button>
     </fieldset>
   </form>
   <p>Saved Previous Searches: </p>
   <ul>
-    <% yelpDBRestuls.forEach( yelp = > {%>
+    <% yelpDBRestuls.forEach( yelp => { %>
       <li>
         <section></section>
           <h4><%= yelp.name %></h4>

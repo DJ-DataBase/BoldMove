@@ -10,7 +10,7 @@
   <h1>Bold Move</h1>
   <h3>~Menu~</h3>
   <ul>
-    <%searchResults.forEach( yelp = > {%>
+    <%searchResults.forEach( yelp => {%>
       <li>
         <section></section>
           <h4><%= yelp.name %></h4>
@@ -25,6 +25,7 @@
         <button type="submit">+</button>
       </form>
     </li>
+    <% }) %>
   </ul>
 </body>
 </html>
