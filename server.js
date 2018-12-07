@@ -29,17 +29,34 @@ app.set('view engine', 'ejs')
 app.get('/', (request, response) => {
   response.render('pages/index');
 })
-
+app.get('/menu', (request, response) => {
+  response.render('pages/menu');
+})
+app.get('/currency', (request, response) => {
+  response.render('pages/currency');
+})
+app.get('/weather', (request, response) => {
+  response.render('pages/weather');
+})
+app.get('/translatePage', (request, response) => {
+  response.render('pages/translate')
+})
 
 
 //routes
 app.post('/location', getLocation);
+app.post('/translate', getTranslation);
+app.get('/pages/weather', getWeather);
 app.get('*', (request, response) => response.status(404).send('This route does not exist.'));
 
 // listening
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
+app.post('/currencyForm', currencyPage);
 
+function currencyPage(req, res) {
+  res.render('pages/currency');
+}
 
 function getLocation (request, response) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
@@ -57,14 +74,27 @@ function getLocation (request, response) {
 
 function getRestCountry (country) {
   const url = `https://restcountries.eu/rest/v2/name/${country}?fullText=true`;
-  console.log('country', country);
   return superagent.get(url)
     .then (results => {
       const restCountry = new RestCountryObj(results.body);
       restCountry.save(country);
     })
+}
 
-
+function getTranslation (request, response) {
+  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${Location.currentLocation}';`;
+  client.query(SQL)
+    .then(result => {
+      const url = `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_TRANSLATE_API}&q=${request.body.pleaseTranslate}?&target=${result.rows[0].lang_code}`;
+      superagent.post(url)
+        .then(res => {
+          let translatedString = res.body.data.translations[0].translatedText;
+          console.log('this is our results:', translatedString)
+          response.render('./pages/translate.ejs', {translate: translatedString})
+        });
+      // .then(response.redirect('pages/translate'))
+    })
+    .catch(console.error('error happened'))
 }
 
 function Location(query, res) {
@@ -76,6 +106,7 @@ function Location(query, res) {
 }
 
 Location.tableName = 'locations';
+Location.currentLocation = '';
 
 Location.prototype.save = function () {
   const SQL = `INSERT INTO locations (city_name, country_name, latitude, longitude) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING RETURNING id;`;
@@ -93,10 +124,9 @@ function RestCountryObj(request) {
   this.currencySymbol = request[0].currencies[0].symbol;
   this.languageCode = request[0].languages[0].iso639_1;
   this.created_at = Date.now();
-  console.log('restcountry object', this);
 }
+
 RestCountryObj.prototype.save = function (location_name) {
-  console.log('in restcountry save function');
   const SQL = `UPDATE locations SET currency_code=$1, currency_symbol=$2, lang_code=$3 WHERE country_name=$4;`;
   const values = [this.currencyCode, this.currencySymbol, this.languageCode, location_name];
 
@@ -106,8 +136,6 @@ RestCountryObj.prototype.save = function (location_name) {
   //   return this;
   // });
 }
-/////WEATHER//////////////////////////////////////////////////////////////
-app.get('/pages/weather', getWeather);
 
 function Weather(day) {
   this.tableName = 'forecasts';
@@ -123,7 +151,6 @@ function Weather(day) {
 
 Weather.tableName = 'forecasts';
 Weather.lookup = lookup;
-// Weather.deleteByLocationId = deleteByLocationId;
 
 Weather.prototype = {
   save: function (location_id) {
@@ -166,25 +193,6 @@ function getWeather(request, response) {
     }
   })
 }
-
-// function deleteByLocationId(table, city) {
-//   const SQL = `DELETE from ${table} WHERE location_id=${city};`;
-//   return client.query(SQL);
-// }
-
-
-
-//////END WEATHER///////////////////////////////////////////////
-
-
-// function Yelp(attraction) {
-//   this.tableName = 'attraction';
-//   this.created_at = Date.now();
-//   this.name =
-//   this.url =
-//   this.rating =
-//   this.address =
-// }
 
 //helper functions
 
