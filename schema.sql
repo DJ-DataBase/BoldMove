@@ -10,3 +10,16 @@ CREATE TABLE IF NOT EXISTS locations (
     currency_symbol VARCHAR(255),
     lang_code VARCHAR(255)
   );
+
+  CREATE TABLE IF NOT EXISTS forecasts ( 
+    id SERIAL PRIMARY KEY,
+    current_temp VARCHAR(255),
+    current_precip VARCHAR(255), 
+    current_summary VARCHAR(255),
+    tomorrow_high VARCHAR(255),
+    tomorrow_low VARCHAR(255),
+    tomorrow_precip VARCHAR(255),
+    time VARCHAR(255),
+    created_at BIGINT,
+    location_id INTEGER NOT NULL REFERENCES locations(id)
+  );
