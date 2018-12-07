@@ -47,7 +47,7 @@ function getLocation (request, response) {
     .then(res => {
       const location = new Location(request.body.city, res);
       location.save()
-        .then(getRestCountry(res.body.results[0].address_components[3].long_name))
+        .then(getRestCountry(res.body.results[0].address_components[res.body.results[0].address_components.length - 1].long_name))
         .then(location => response.send(location));
     })
     .catch(error => handleError(error));
@@ -70,7 +70,7 @@ function Location(query, res) {
   this.latitude = res.body.results[0].geometry.location.lat;
   this.longitude = res.body.results[0].geometry.location.lng;
   this.cityName = query;
-  this.countryName = res.body.results[0].address_components[3].long_name;
+  this.countryName = res.body.results[0].address_components[res.body.results[0].address_components.length - 1].long_name;
 }
 
 Location.tableName = 'locations';
