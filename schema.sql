@@ -21,5 +21,5 @@ CREATE TABLE IF NOT EXISTS locations (
     tomorrow_precip VARCHAR(255),
     time VARCHAR(255),
     created_at BIGINT,
-    location_id INTEGER NOT NULL REFERENCES locations(id)
+    location_id VARCHAR(255)
   );
