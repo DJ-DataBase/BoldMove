@@ -42,6 +42,7 @@ app.get('/translatePage', (request, response) => {
   response.render('pages/translate')
 })
 
+
 //routes
 app.post('/location', getLocation);
 app.post('/translate', getTranslation);
@@ -50,6 +51,11 @@ app.get('*', (request, response) => response.status(404).send('This route does n
 // listening
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
+app.post('/currencyForm', currencyPage);
+
+function currencyPage(req, res) {
+  res.render('pages/currency');
+}
 
 function getLocation (request, response) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
@@ -93,6 +99,7 @@ function getTranslation (request, response) {
 
 function Location(query, res) {
   this.tableName = 'locations';
+  console.log(res.body);
   this.latitude = res.body.results[0].geometry.location.lat;
   this.longitude = res.body.results[0].geometry.location.lng;
   this.cityName = query;
