@@ -47,18 +47,18 @@ function getLocation (request, response) {
     .then(res => {
       const location = new Location(request.body.city, res);
       location.save()
-        .then(getRestCountry(res.body.results[0].address_components[2].long_name))
+        .then(getRestCountry(res.body.results[0].address_components[3].long_name))
         .then(location => response.send(location));
     })
     .catch(error => handleError(error));
 }
 
 function getRestCountry (country) {
-  const url = `https://restcountries.eu/${country}/v2/all`;
-
-  return superagent.get(url) 
+  const url = `https://restcountries.eu/rest/v2/name/${country}?fullText=true`;
+  console.log('country', country);
+  return superagent.get(url)
     .then (results => {
-      const restCountry = new RestCountryObj(results);
+      const restCountry = new RestCountryObj(results.body);
       restCountry.save(country);
     })
 
@@ -70,7 +70,7 @@ function Location(query, res) {
   this.latitude = res.body.results[0].geometry.location.lat;
   this.longitude = res.body.results[0].geometry.location.lng;
   this.cityName = query;
-  this.countryName = res.body.results[0].address_components[2].long_name;
+  this.countryName = res.body.results[0].address_components[3].long_name;
 }
 
 Location.tableName = 'locations';
@@ -89,19 +89,20 @@ Location.prototype.save = function () {
 function RestCountryObj(request) {
   this.currencyCode = request[0].currencies[0].code;
   this.currencySymbol = request[0].currencies[0].symbol;
-  this.languageCode = request.languages[0].iso639_1;
+  this.languageCode = request[0].languages[0].iso639_1;
   this.created_at = Date.now();
-  console.log('this', this);
+  console.log('restcountry object', this);
 }
 RestCountryObj.prototype.save = function (location_name) {
-  const SQL = `UPDATE locations SET currency_code=$1 currency_symbol=$2 lang_code=$3 WHERE country_name=$4;`;
+  console.log('in restcountry save function');
+  const SQL = `UPDATE locations SET currency_code=$1, currency_symbol=$2, lang_code=$3 WHERE country_name=$4;`;
   const values = [this.currencyCode, this.currencySymbol, this.languageCode, location_name];
 
   return client.query(SQL, values)
-    .then(result => {
-      this.id = result.rows[0].id;
-      return this;
-    });
+    // .then(result => {
+    //   this.id = result.rows[0].id;
+    //   return this;
+    // });
 }
 
 //weather model
