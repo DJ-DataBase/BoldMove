@@ -154,11 +154,11 @@ function showYelpResults (req, res) {
 }
 
 function addYelptoSave (req, res) {
-  let {name, created_at, rating, price, image_url} = req.body;
+  let {name, created_at, rating, price, image_url, url} = req.body;
 
-  let SQL = 'INSERT INTO yelp(name, created_at, rating, price, image_url) VALUES ($1, $2, $3, $4, $5);';
-  let values = [name, created_at, rating, price, image_url];
-
+  let SQL = 'INSERT INTO yelp(name, created_at, rating, price, image_url, url) VALUES ($1, $2, $3, $4, $5, $6);';
+  let values = [name, created_at, rating, price, image_url, url];
+  // console.log('values!!!!!!!!!!!', values);
   return client.query(SQL, values)
     .then(res.redirect('/yelp'))
     .catch(handleError);
@@ -207,10 +207,6 @@ RestCountryObj.prototype.save = function (location_name) {
   const values = [this.currencyCode, this.currencySymbol, this.languageCode, location_name];
 
   return client.query(SQL, values)
-  // .then(result => {
-  //   this.id = result.rows[0].id;
-  //   return this;
-  // });
 }
 
 function Weather(day) {
@@ -241,7 +237,7 @@ function YelpObj(place) {
   this.price = place.price;
   this.image_url = place.image_url;
   this.created_at = Date.now();
-  console.log('yelpobj', this);
+  // console.log('yelpobj', this);
 }
 
 function getWeather(request, response) {

@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS locations (
     created_at BIGINT,
     rating NUMERIC(3, 0),
     price VARCHAR(255),
-    image_url VARCHAR(255)
+    image_url VARCHAR(255),
+    url VARCHAR(255)
   );
 
 INSERT INTO locations (city_name, country_name, latitude, longitude, currency_code, currency_symbol, lang_code) 

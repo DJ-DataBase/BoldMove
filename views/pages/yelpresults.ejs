@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Bold Move</title>
-</head>
+<html>
+  <head>
+    <%- include('../layout/head') %>
+  </head>
 <body>
+  <header>
+    <%- include('../layout/header') %>
+  </header>
   <h1>Bold Move</h1>
   <h3>~Menu~</h3>
   <ul>
@@ -22,6 +22,12 @@
             <p><%= yelp.price%></p>
         </section>
       <form action="/yelpAdd" method="post">
+        <input type="hidden" value="<%= yelp.name %>" name="name">
+        <input type="hidden" value="<%= yelp.created_at %>" name="created_at">
+        <input type="hidden" value="<%= yelp.rating %>" name="rating">
+        <input type="hidden" value="<%= yelp.price %>" name="price">
+        <input type="hidden" value="<%= yelp.image_url %>" name="image_url"> 
+        <input type="hidden" value="<%= yelp.url %>" name="url"> 
         <button type="submit">Save to your Yelp list</button>
       </form>
     </li>
