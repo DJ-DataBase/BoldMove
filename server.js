@@ -62,11 +62,13 @@ function currencyPage(req, res) {
   res.render('pages/currency');
 }
 
+let currentLocation = '';
+
+
 
 function getLocation (request, response) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
-  let currentLocation = request.body.city;
-
+  currentLocation = request.body.city;
 
   return superagent.get(url)
     .then(res => {
@@ -89,7 +91,7 @@ function getRestCountry (country) {
 }
 
 function getTranslation (request, response) {
-  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${let }';`;
+  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${currentLocation}';`;
   client.query(SQL)
     .then(result => {
       const url = `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_TRANSLATE_API}&q=${request.body.pleaseTranslate}?&target=${result.rows[0].lang_code}`;
@@ -119,7 +121,7 @@ function currencyConvert (request, response) {
           console.log(result)
           response.render('pages/currencyResult', {resultShow : result})  
         })
-      })
+    })
     .catch(console.error('error happened'))
 }
 
