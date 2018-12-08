@@ -32,8 +32,12 @@ app.get('/', (request, response) => {
 app.get('/menu', (request, response) => {
   response.render('pages/menu');
 })
-app.get('/currency', (request, response) => {
-  response.render('pages/currency');
+
+app.post('/currency', currencyConvert);
+
+app.get('/weather', (request, response) => {
+  response.render('pages/weather');
+
 })
 app.get('/translatePage', (request, response) => {
   response.render('pages/translateNew')
@@ -58,12 +62,11 @@ function currencyPage(req, res) {
   res.render('pages/currency');
 }
 
-let currentLocation = '';
 
 function getLocation (request, response) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
   currentLocation = request.body.city;
-  console.log('location', currentLocation);
+
 
   return superagent.get(url)
     .then(res => {
@@ -74,6 +77,7 @@ function getLocation (request, response) {
     })
     .catch(error => handleError(error));
 }
+
 
 function getRestCountry (country) {
   const url = `https://restcountries.eu/rest/v2/name/${country}?fullText=true`;
@@ -99,7 +103,26 @@ function getTranslation (request, response) {
     })
     .catch(error => handleError(error));
 }
-//verified the show saved works
+
+function currencyConvert (request, response) {
+  
+  const SQL = `SELECT DISTINCT currency_code FROM locations WHERE city_name = '${Location.currentLocation}';`;
+  return client.query(SQL)
+    .then(currencyCode => {
+      console.log('full rows', currencyCode.rows);
+      let currCode = currencyCode.rows[0].currency_code;
+      const url = `https://currency-exchange.apphb.com/api/rates?apikey=a84e43b27f20e6645157b29a42f1a25c&provider=currencylayer&fr=USD&to=${currCode}`;
+      
+      superagent.get(url)
+        .then(res => {
+          let result = res.body * request.body.currencyReturn;
+          console.log(result)
+          response.render('pages/currencyResult', {resultShow : result})  
+        })
+      })
+    .catch(console.error('error happened'))
+}
+
 function showYelpForm (req, res) {
   let SQL = 'SELECT * FROM yelp;';
 
