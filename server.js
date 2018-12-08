@@ -25,6 +25,7 @@ client.on('error', err => console.error(err));
 
 app.set('view engine', 'ejs')
 
+
 //view routes
 app.get('/', (request, response) => {
   response.render('pages/index');
@@ -32,34 +33,37 @@ app.get('/', (request, response) => {
 app.get('/menu', (request, response) => {
   response.render('pages/menu');
 })
-
-app.post('/currency', currencyConvert);
-
-app.get('/translatePage', (request, response) => {
+app.get('/translate', (request, response) => {
   response.render('pages/translateNew')
 })
 app.get('/yelp', showYelpForm);
+app.get('/weather', getWeather);
+app.get('/currency', currencyPage);
+app.get('/aboutus', showAboutUs);
+app.get('*', (request, response) => response.status(404).send('This route does not exist.'));
+
+//routes
 app.post('/yelpSearch', showYelpResults);
 app.post('/yelpAdd', addYelptoSave);
 app.post('/yelpDelete/:yelp_id',deleteYelp);
-
-//routes
 app.post('/location', getLocation);
 app.post('/translate', getTranslation);
-app.get('/weather', getWeather);
-app.get('*', (request, response) => response.status(404).send('This route does not exist.'));
+app.post('/currency', currencyConvert);
+// app.post('/currencyForm', currencyPage);
 
 // listening
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-app.post('/currencyForm', currencyPage);
-
-function currencyPage(req, res) {
-  res.render('pages/currency');
-}
-
+//global variable
 let currentLocation = '';
 
+function currencyPage(req, res) {
+  res.render('./pages/currency');
+}
+
+function showAboutUs (req, res) {
+  res.render('./pages/aboutus');
+}
 
 
 function getLocation (request, response) {

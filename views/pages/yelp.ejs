@@ -7,6 +7,8 @@
   <header>
     <%- include('../layout/header') %>
   </header>
+  <h1>Bold Move</h1>
+  <h3>~Yelp Elf~</h3>
   <form action="/yelpSearch" method="POST">
     <fieldset>
       <label>
@@ -21,9 +23,7 @@
     <% yelpDBRestuls.forEach( yelp => { %>
       <li>
         <section></section>
-          <h4><%= yelp.name %></h4>
-          <span>URL</span>
-            <p><%= yelp.url%></p>
+          <h4><a href="<%= yelp.url%>"><%= yelp.name %></a></h4>
           <span>Rating</span>
             <p><%= yelp.rating%></p>
           <span>Price</span>
