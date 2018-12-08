@@ -3,39 +3,39 @@
   <head>
     <%- include('../layout/head') %>
   </head>
-<body>
-  <header>
-    <%- include('../layout/header') %>
-  </header>
-  <h1>Bold Move</h1>
-  <h3>~Yelp Elf~</h3>
-  <form action="/yelpSearch" method="POST">
-    <fieldset>
-      <label>
-        <span>Search: </span>
-        <input type="text" name="yelpSearchInquiry" id="search-input" required>
-      </label>
-      <button type="submit">Search</button>
-    </fieldset>
-  </form>
-  <p>Saved Previous Searches: </p>
-  <ul>
-    <% yelpDBRestuls.forEach( yelp => { %>
-      <li>
-        <section></section>
-          <h4><a href="<%= yelp.url%>"><%= yelp.name %></a></h4>
-          <span>Rating</span>
-            <p><%= yelp.rating%></p>
-          <span>Price</span>
-            <p><%= yelp.price%></p>
-        </section>
-        <img src="<%= yelp.image_url %>"> 
-        <form action="/yelpDelete/<%= yelp.id %>" method="post">
-            <input type="hidden" name="_method" value="delete">
-            <button type="submit">Delete from your Yelp list</button>
-        </form>
-      </li>
-    <% }) %>
-  </ul>
-</body>
+  <body>
+    <header>
+      <%- include('../layout/header') %>
+    </header>
+    <h1>Bold Move</h1>
+    <h3>~Yelp Elf~</h3>
+    <form action="/yelpSearch" method="POST">
+      <fieldset>
+        <label>
+          <span>Search: </span>
+          <input type="text" name="yelpSearchInquiry" id="search-input" required>
+        </label>
+        <button type="submit">Search</button>
+      </fieldset>
+    </form>
+    <p>Saved Previous Searches: </p>
+    <ul>
+      <% yelpDBRestuls.forEach( yelp => { %>
+        <li>
+          <section></section>
+            <h4><a href="<%= yelp.url%>"><%= yelp.name %></a></h4>
+            <span>Rating</span>
+              <p><%= yelp.rating%></p>
+            <span>Price</span>
+              <p><%= yelp.price%></p>
+          </section>
+          <img src="<%= yelp.image_url %>"> 
+          <form action="/yelpDelete/<%= yelp.id %>" method="post">
+              <input type="hidden" name="_method" value="delete">
+              <button type="submit">Delete from your Yelp list</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  </body>
 </html>
