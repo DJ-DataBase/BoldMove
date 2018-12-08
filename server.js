@@ -57,127 +57,7 @@ app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 //global variable
 let currentLocation = '';
 
-function currencyPage(req, res) {
-  res.render('./pages/currency');
-}
-
-function showAboutUs (req, res) {
-  res.render('./pages/aboutus');
-}
-
-
-function getLocation (request, response) {
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
-  currentLocation = request.body.city;
-
-  return superagent.get(url)
-    .then(res => {
-      const location = new Location(request.body.city, res);
-      location.save()
-        .then(getRestCountry(res.body.results[0].address_components[res.body.results[0].address_components.length - 1].long_name))
-        .then(response.redirect('/menu'));
-    })
-    .catch(error => handleError(error));
-}
-
-
-function getRestCountry (country) {
-  const url = `https://restcountries.eu/rest/v2/name/${country}?fullText=true`;
-  return superagent.get(url)
-    .then (results => {
-      const restCountry = new RestCountryObj(results.body);
-      restCountry.save(country);
-    })
-}
-
-function getTranslation (request, response) {
-  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${currentLocation}';`;
-  client.query(SQL)
-    .then(result => {
-      const url = `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_TRANSLATE_API}&q=${request.body.pleaseTranslate}?&target=${result.rows[0].lang_code}`;
-      superagent.post(url)
-        .then(res => {
-          let translatedString = res.body.data.translations[0].translatedText;
-          let newTranString = translatedString.slice(0, translatedString.length - 1);
-          // console.log('this is our results:', translatedString)
-          response.render('./pages/translate.ejs', {translate: newTranString})
-        });
-    })
-    .catch(error => handleError(error));
-}
-
-function currencyConvert (request, response) {
-
-  const SQL = `SELECT DISTINCT currency_code FROM locations WHERE city_name = '${currentLocation}';`;
-  return client.query(SQL)
-    .then(currencyCode => {
-      // console.log('full rows', currencyCode.rows);
-      let currCode = currencyCode.rows[0].currency_code;
-      const url = `https://currency-exchange.apphb.com/api/rates?apikey=a84e43b27f20e6645157b29a42f1a25c&provider=currencylayer&fr=USD&to=${currCode}`;
-
-      superagent.get(url)
-        .then(res => {
-          let result = res.body * request.body.currencyReturn;
-          response.render('pages/currencyResult', {resultShow : result})
-        })
-    })
-    .catch(console.error('error happened'))
-}
-
-function showYelpForm (req, res) {
-  let SQL = 'SELECT * FROM yelp;';
-
-  return client.query(SQL)
-    .then(yelpDBRestuls => {
-      res.render('pages/yelp', {yelpDBRestuls: yelpDBRestuls.rows})
-    })
-    .catch(error => handleError(error, res));
-}
-
-function showYelpResults (req, res) {
-  let SQL = 'SELECT latitude, longitude FROM locations WHERE city_name=$1;';
-  // let values = [req.params.city];
-  let values = [currentLocation];
-
-  client.query(SQL, values)
-    .then( result => {
-      const url = `https://api.yelp.com/v3/businesses/search?term=${req.body.yelpSearchInquiry}&latitude=${result.rows[0].latitude}&longitude=${result.rows[0].longitude}`;
-      // console.log('yelp url', url);
-
-      superagent.get(url)
-        .set('Authorization', `Bearer ${process.env.YELP_API_KEY}`)
-        .then(yelpResponse => {
-          const yelpSummaries = yelpResponse.body.businesses.map(place => {
-            return new YelpObj(place);
-          });
-          // console.log('yelpsummaries', yelpSummaries);
-          res.render('pages/yelpresults',{searchResults: yelpSummaries})
-        })
-        .catch(error => handleError(error, res));
-    })
-}
-
-function addYelptoSave (req, res) {
-  let {name, created_at, rating, price, image_url, url} = req.body;
-
-  let SQL = 'INSERT INTO yelp(name, created_at, rating, price, image_url, url) VALUES ($1, $2, $3, $4, $5, $6);';
-  let values = [name, created_at, rating, price, image_url, url];
-  // console.log('values!!!!!!!!!!!', values);
-  return client.query(SQL, values)
-    .then(res.redirect('/yelp'))
-    .catch(handleError);
-}
-
-function deleteYelp (req, res) {
-  let SQL = 'DELETE FROM yelp WHERE id=$1;';
-  let values = [req.params.yelp_id];
-
-  return client.query(SQL, values)
-    .then(res.redirect('/yelp'))
-    .catch(handleError);
-}
-
-
+//constructors/models
 function Location(query, res) {
   this.tableName = 'locations';
   this.latitude = res.body.results[0].geometry.location.lat;
@@ -262,9 +142,123 @@ function getWeather(request, response) {
     .catch(err => handleError(err));
 }
 
+//Helper functions
+function currencyPage(req, res) {
+  res.render('./pages/currency');
+}
 
-//helper functions
+function showAboutUs (req, res) {
+  res.render('./pages/aboutus');
+}
 
+function showYelpForm (req, res) {
+  let SQL = 'SELECT * FROM yelp;';
+
+  return client.query(SQL)
+    .then(yelpDBRestuls => {
+      res.render('pages/yelp', {yelpDBRestuls: yelpDBRestuls.rows})
+    })
+    .catch(error => handleError(error, res));
+}
+
+function getLocation (request, response) {
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
+  currentLocation = request.body.city;
+
+  return superagent.get(url)
+    .then(res => {
+      const location = new Location(request.body.city, res);
+      location.save()
+        .then(getRestCountry(res.body.results[0].address_components[res.body.results[0].address_components.length - 1].long_name))
+        .then(response.redirect('/menu'));
+    })
+    .catch(error => handleError(error));
+}
+
+function getRestCountry (country) {
+  const url = `https://restcountries.eu/rest/v2/name/${country}?fullText=true`;
+  return superagent.get(url)
+    .then (results => {
+      const restCountry = new RestCountryObj(results.body);
+      restCountry.save(country);
+    })
+}
+
+function getTranslation (request, response) {
+  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${currentLocation}';`;
+  client.query(SQL)
+    .then(result => {
+      const url = `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_TRANSLATE_API}&q=${request.body.pleaseTranslate}?&target=${result.rows[0].lang_code}`;
+      superagent.post(url)
+        .then(res => {
+          let translatedString = res.body.data.translations[0].translatedText;
+          let newTranString = translatedString.slice(0, translatedString.length - 1);
+          // console.log('this is our results:', translatedString)
+          response.render('./pages/translate.ejs', {translate: newTranString})
+        });
+    })
+    .catch(error => handleError(error));
+}
+
+function currencyConvert (request, response) {
+  const SQL = `SELECT DISTINCT currency_code FROM locations WHERE city_name = '${currentLocation}';`;
+  return client.query(SQL)
+    .then(currencyCode => {
+      // console.log('full rows', currencyCode.rows);
+      let currCode = currencyCode.rows[0].currency_code;
+      const url = `https://currency-exchange.apphb.com/api/rates?apikey=a84e43b27f20e6645157b29a42f1a25c&provider=currencylayer&fr=USD&to=${currCode}`;
+
+      superagent.get(url)
+        .then(res => {
+          let result = res.body * request.body.currencyReturn;
+          response.render('pages/currencyResult', {resultShow : result})
+        })
+    })
+    .catch(console.error('error happened'))
+}
+
+function showYelpResults (req, res) {
+  let SQL = 'SELECT latitude, longitude FROM locations WHERE city_name=$1;';
+  // let values = [req.params.city];
+  let values = [currentLocation];
+
+  client.query(SQL, values)
+    .then( result => {
+      const url = `https://api.yelp.com/v3/businesses/search?term=${req.body.yelpSearchInquiry}&latitude=${result.rows[0].latitude}&longitude=${result.rows[0].longitude}`;
+      // console.log('yelp url', url);
+
+      superagent.get(url)
+        .set('Authorization', `Bearer ${process.env.YELP_API_KEY}`)
+        .then(yelpResponse => {
+          const yelpSummaries = yelpResponse.body.businesses.map(place => {
+            return new YelpObj(place);
+          });
+          // console.log('yelpsummaries', yelpSummaries);
+          res.render('pages/yelpresults',{searchResults: yelpSummaries})
+        })
+        .catch(error => handleError(error, res));
+    })
+}
+
+function addYelptoSave (req, res) {
+  let {name, created_at, rating, price, image_url, url} = req.body;
+
+  let SQL = 'INSERT INTO yelp(name, created_at, rating, price, image_url, url) VALUES ($1, $2, $3, $4, $5, $6);';
+  let values = [name, created_at, rating, price, image_url, url];
+  // console.log('values!!!!!!!!!!!', values);
+  return client.query(SQL, values)
+    .then(res.redirect('/yelp'))
+    .catch(handleError);
+}
+
+function deleteYelp (req, res) {
+  let SQL = 'DELETE FROM yelp WHERE id=$1;';
+  let values = [req.params.yelp_id];
+
+  return client.query(SQL, values)
+    .then(res.redirect('/yelp'))
+    .catch(handleError);
+}
 
 function handleError(err, res) {
   console.error(err);
