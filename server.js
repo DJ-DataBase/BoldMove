@@ -35,10 +35,6 @@ app.get('/menu', (request, response) => {
 
 app.post('/currency', currencyConvert);
 
-app.get('/weather', (request, response) => {
-  response.render('pages/weather');
-
-})
 app.get('/translatePage', (request, response) => {
   response.render('pages/translateNew')
 })
@@ -107,19 +103,18 @@ function getTranslation (request, response) {
 }
 
 function currencyConvert (request, response) {
-  
-  const SQL = `SELECT DISTINCT currency_code FROM locations WHERE city_name = '${Location.let }';`;
+
+  const SQL = `SELECT DISTINCT currency_code FROM locations WHERE city_name = '${currentLocation}';`;
   return client.query(SQL)
     .then(currencyCode => {
       // console.log('full rows', currencyCode.rows);
       let currCode = currencyCode.rows[0].currency_code;
       const url = `https://currency-exchange.apphb.com/api/rates?apikey=a84e43b27f20e6645157b29a42f1a25c&provider=currencylayer&fr=USD&to=${currCode}`;
-      
+
       superagent.get(url)
         .then(res => {
           let result = res.body * request.body.currencyReturn;
-          // console.log(result)
-          response.render('pages/currencyResult', {resultShow : result})  
+          response.render('pages/currencyResult', {resultShow : result})
         })
     })
     .catch(console.error('error happened'))
