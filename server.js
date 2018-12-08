@@ -99,7 +99,7 @@ function getTranslation (request, response) {
         .then(res => {
           let translatedString = res.body.data.translations[0].translatedText;
           let newTranString = translatedString.slice(0, translatedString.length - 1);
-          console.log('this is our results:', translatedString)
+          // console.log('this is our results:', translatedString)
           response.render('./pages/translate.ejs', {translate: newTranString})
         });
     })
@@ -111,14 +111,14 @@ function currencyConvert (request, response) {
   const SQL = `SELECT DISTINCT currency_code FROM locations WHERE city_name = '${Location.let }';`;
   return client.query(SQL)
     .then(currencyCode => {
-      console.log('full rows', currencyCode.rows);
+      // console.log('full rows', currencyCode.rows);
       let currCode = currencyCode.rows[0].currency_code;
       const url = `https://currency-exchange.apphb.com/api/rates?apikey=a84e43b27f20e6645157b29a42f1a25c&provider=currencylayer&fr=USD&to=${currCode}`;
       
       superagent.get(url)
         .then(res => {
           let result = res.body * request.body.currencyReturn;
-          console.log(result)
+          // console.log(result)
           response.render('pages/currencyResult', {resultShow : result})  
         })
     })
@@ -138,7 +138,7 @@ function showYelpForm (req, res) {
 function showYelpResults (req, res) {
   let SQL = 'SELECT latitude, longitude FROM locations WHERE city_name=$1;';
   // let values = [req.params.city];
-  let values = ['paris'];
+  let values = [currentLocation];
 
   client.query(SQL, values)
     .then( result => {
@@ -171,7 +171,6 @@ function addYelptoSave (req, res) {
 
 function deleteYelp (req, res) {
   let SQL = 'DELETE FROM yelp WHERE id=$1;';
-  // console.log('request param', req.params.yelp_id)
   let values = [req.params.yelp_id];
 
   return client.query(SQL, values)
@@ -254,13 +253,13 @@ function getWeather(request, response) {
   const SQL = `SELECT latitude, longitude FROM locations WHERE city_name = '${currentLocation}';`;
   client.query(SQL)
     .then(result => {
-      console.log('lat long result', result.rows[0]);
-      console.log('lat results', result.rows[0].latitude);
+      // console.log('lat long result', result.rows[0]);
+      // console.log('lat results', result.rows[0].latitude);
       const url = `https://api.darksky.net/forecast/${process.env.DARKSKY_API}/${result.rows[0].latitude},${result.rows[0].longitude}`;
       superagent.get(url)
         .then(result => {
           const weather = new Weather(result.body);
-          console.log(weather);
+          // console.log(weather);
           weather.save();
           response.render('./pages/weather', {weather: weather});
         });
