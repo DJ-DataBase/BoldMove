@@ -32,22 +32,25 @@ app.get('/', (request, response) => {
 app.get('/menu', (request, response) => {
   response.render('pages/menu');
 })
-app.post('/currency', currencyConvert);
 
+app.post('/currency', currencyConvert);
 
 app.get('/weather', (request, response) => {
   response.render('pages/weather');
+
 })
 app.get('/translatePage', (request, response) => {
-  response.render('pages/translate')
+  response.render('pages/translateNew')
 })
 app.get('/yelp', showYelpForm);
-app.get('/yelpresults', showYelpResults);
+app.post('/yelpSearch', showYelpResults);
+app.post('/yelpAdd', addYelptoSave);
+app.post('/yelpDelete/:yelp_id',deleteYelp);
 
 //routes
 app.post('/location', getLocation);
 app.post('/translate', getTranslation);
-app.get('/pages/weather', getWeather);
+app.get('/weather', getWeather);
 app.get('*', (request, response) => response.status(404).send('This route does not exist.'));
 
 // listening
@@ -62,8 +65,9 @@ function currencyPage(req, res) {
 
 function getLocation (request, response) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
-  Location.currentLocation = request.body.city;
-  console.log(Location.currentLocation);
+  currentLocation = request.body.city;
+
+
   return superagent.get(url)
     .then(res => {
       const location = new Location(request.body.city, res);
@@ -85,21 +89,20 @@ function getRestCountry (country) {
 }
 
 function getTranslation (request, response) {
-  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${Location.currentLocation}';`;
+  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${currentLocation}';`;
   client.query(SQL)
     .then(result => {
       const url = `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_TRANSLATE_API}&q=${request.body.pleaseTranslate}?&target=${result.rows[0].lang_code}`;
       superagent.post(url)
         .then(res => {
           let translatedString = res.body.data.translations[0].translatedText;
+          let newTranString = translatedString.slice(0, translatedString.length - 1);
           console.log('this is our results:', translatedString)
-          response.render('./pages/translate.ejs', {translate: translatedString})
+          response.render('./pages/translate.ejs', {translate: newTranString})
         });
-      // .then(response.redirect('pages/translate'))
     })
-    .catch(console.error('error happened'))
+    .catch(error => handleError(error));
 }
-
 
 function currencyConvert (request, response) {
   
@@ -120,7 +123,6 @@ function currencyConvert (request, response) {
     .catch(console.error('error happened'))
 }
 
-
 function showYelpForm (req, res) {
   let SQL = 'SELECT * FROM yelp;';
 
@@ -128,34 +130,51 @@ function showYelpForm (req, res) {
     .then(yelpDBRestuls => {
       res.render('pages/yelp', {yelpDBRestuls: yelpDBRestuls.rows})
     })
-    .catch(handleError);
+    .catch(error => handleError(error, res));
 }
 
 function showYelpResults (req, res) {
-  let SQL = 'SELECT * FROM boldmove WHERE city_name=$1;';
+  let SQL = 'SELECT latitude, longitude FROM locations WHERE city_name=$1;';
   // let values = [req.params.city];
   let values = ['paris'];
-  console.log('in get yelp result function');
 
-  return client.query(SQL, values)
+  client.query(SQL, values)
     .then( result => {
-      const url = `https://api.yelp.com/v3/businesses/search?term=burger&latitude=${result.row[0].latitude}&longitude=${result.row[0].longitude}`;
+      const url = `https://api.yelp.com/v3/businesses/search?term=${req.body.yelpSearchInquiry}&latitude=${result.rows[0].latitude}&longitude=${result.rows[0].longitude}`;
+      // console.log('yelp url', url);
 
-      return superagent.get(url)
+      superagent.get(url)
         .set('Authorization', `Bearer ${process.env.YELP_API_KEY}`)
-        .then(yelpResult => {
-          console.log('in get yelp result superagent function');
-          const yelpSummaries = yelpResult.body.businesses.map(place => {
-            const summary = new YelpObj(place);
-            console.log('location id', req.query.data);
-            summary.save(req.query.data.id);
-            return summary;
+        .then(yelpResponse => {
+          const yelpSummaries = yelpResponse.body.businesses.map(place => {
+            return new YelpObj(place);
           });
-          res.render('pages/yelpresults',{searchResults: yelpResult});
-          res.send(yelpSummaries);
+          // console.log('yelpsummaries', yelpSummaries);
+          res.render('pages/yelpresults',{searchResults: yelpSummaries})
         })
         .catch(error => handleError(error, res));
     })
+}
+
+function addYelptoSave (req, res) {
+  let {name, created_at, rating, price, image_url} = req.body;
+
+  let SQL = 'INSERT INTO yelp(name, created_at, rating, price, image_url) VALUES ($1, $2, $3, $4, $5);';
+  let values = [name, created_at, rating, price, image_url];
+
+  return client.query(SQL, values)
+    .then(res.redirect('/yelp'))
+    .catch(handleError);
+}
+
+function deleteYelp (req, res) {
+  let SQL = 'DELETE FROM yelp WHERE id=$1;';
+  // console.log('request param', req.params.yelp_id)
+  let values = [req.params.yelp_id];
+
+  return client.query(SQL, values)
+    .then(res.redirect('/yelp'))
+    .catch(handleError);
 }
 
 
@@ -168,7 +187,6 @@ function Location(query, res) {
 }
 
 Location.tableName = 'locations';
-
 
 Location.prototype.save = function () {
   const SQL = `INSERT INTO locations (city_name, country_name, latitude, longitude) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING RETURNING id;`;
@@ -201,79 +219,65 @@ RestCountryObj.prototype.save = function (location_name) {
 
 function Weather(day) {
   this.tableName = 'forecasts';
-  this.currentTemp = day.res[0].currently.temperature;
-  this.currentPrecip = day.res[0].currently.precipProbability;
-  this.currentSummary = day.res[0].currently.summary;
-  this.tomorrowHigh = day.res[0].daily.data[0].temperatureHigh;
-  this.tomorrowLow = day.res[0].daily.data[0].temperatureLow;
-  this.tomorrowPrecip = day.res[0].daily.data[0].precipProbability;
+  this.currentTemp = day.currently.temperature;
+  this.currentPrecip = day.currently.precipProbability;
+  this.currentSummary = day.currently.summary;
+  this.tomorrowHigh = day.daily.data[1].temperatureHigh;
+  this.tomorrowLow = day.daily.data[1].temperatureLow;
+  this.tomorrowPrecip = day.daily.data[1].precipProbability;
   this.time = new Date(day.time * 1000).toString().slice(0, 15);
   this.created_at = Date.now();
 }
 
 Weather.tableName = 'forecasts';
-Weather.lookup = lookup;
 
-Weather.prototype = {
-  save: function (location_id) {
-    const SQL = `INSERT INTO ${this.tableName} (current_temp, current_precip, current_summary, tomorrow_high, tomorrow_low, tomorrow_precip, time, created_at, location_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
-    const values = [this.currentTemp, this.currentPrecip, this.currentSummary, this.tomorrowHigh, this.tomorrowLow, this.tomorrowPrecip, this.time, this.created_at, this.location_id];
+Weather.prototype.save = function() {
+  const SQL = `INSERT INTO ${this.tableName} (current_temp, current_precip, current_summary, tomorrow_high, tomorrow_low, tomorrow_precip, time, created_at, location_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
+  const values = [this.currentTemp, this.currentPrecip, this.currentSummary, this.tomorrowHigh, this.tomorrowLow, this.tomorrowPrecip, this.time, this.created_at,currentLocation];
+  client.query(SQL, values);
+}
 
-    client.query(SQL, values);
-  }
+function YelpObj(place) {
+  this.tableName = 'yelp';
+  this.url = place.url;
+  this.name = place.name;
+  this.rating = place.rating;
+  this.price = place.price;
+  this.image_url = place.image_url;
+  this.created_at = Date.now();
+  console.log('yelpobj', this);
 }
 
 function getWeather(request, response) {
-  Weather.lookup({
-    tableName: Weather.tableName,
-
-    location: request.query.data.id,
-
-    cacheHit: function (result) {
-      let ageOfResultsInMinutes = (Date.now() - result.rows[0].created_at) / (1000 * 60);
-      if (ageOfResultsInMinutes > 30) {
-        // Weather.deleteByLocationId(Weather.tableName, request.query.data.id);
-        this.cacheMiss();
-      } else {
-        response.send(result.rows);
-      }
-    },
-
-    cacheMiss: function () {
-      const url = `https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${-51.51},${-0.13}`;
-
-      return superagent.get(url)
+  const SQL = `SELECT latitude, longitude FROM locations WHERE city_name = '${currentLocation}';`;
+  client.query(SQL)
+    .then(result => {
+      console.log('lat long result', result.rows[0]);
+      console.log('lat results', result.rows[0].latitude);
+      const url = `https://api.darksky.net/forecast/${process.env.DARKSKY_API}/${result.rows[0].latitude},${result.rows[0].longitude}`;
+      superagent.get(url)
         .then(result => {
-          const weatherSummaries = result.body.daily.data.map(day => {
-            const summary = new Weather(day);
-            summary.save(request.query.data.id);
-            return summary;
-          });
-          response.send(weatherSummaries);
-        })
-        .catch(error => handleError(error, response));
-    }
-  })
+          const weather = new Weather(result.body);
+          console.log(weather);
+          weather.save();
+          response.render('./pages/weather', {weather: weather});
+        });
+    })
+    .catch(err => handleError(err));
 }
+
 
 //helper functions
 
-function lookup(options) {
-  const SQL = `SELECT * FROM ${options.tableName} WHERE location_id=$1;`;
-  const values = [options.location];
-
-  client.query(SQL, values)
-    .then(result => {
-      if (result.rowCount > 0) {
-        options.cacheHit(result);
-      } else {
-        options.cacheMiss();
-      }
-    })
-    .catch(error => handleError(error));
-}
 
 function handleError(err, res) {
   console.error(err);
   if (res) res.satus(500).send('Error encountered.');
 }
+
+// Clear the DB data for a location if it is stale
+function deleteByLocationId(table, city) {
+  const SQL = `DELETE from ${table} WHERE location_id=${city};`;
+  return client.query(SQL);
+}
+

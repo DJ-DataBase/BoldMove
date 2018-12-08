@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <%- include('../layout/head') %>
-    </head>
+<head>
+    <%- include('../layout/head') %>
+</head>
 <body>
-    <header>
-      <%- include('../layout/header') %>
-    </header>
+<header>
+    <%- include('../layout/header') %>
+</header>
 
-  <main>
-    <p></p>
-
-        <div>
-            <form action="/translate" method="POST">
-            <input type="text" name="pleaseTranslate" placeholder = "Type your text" />
-                <fieldset>
-                    <button type="submit">Translate</button>
-                </fieldset>
-            </form>        
-        </div>
-    </main>
-    <footer>
-        <%- include('../layout/footer') %>
-    </footer>
+<main>
+    <div>
+        <form action="/translate" method="POST">
+        <input type="text" name="pleaseTranslate" placeholder = "Type your text" />
+            <fieldset>
+                <button type="submit">Translate</button>
+            </fieldset>
+        </form>        
+        <p></p>
+    </div>
+</main>
+<footer>
+    <%- include('../layout/footer') %>
+</footer>
 </body>
 </html>
