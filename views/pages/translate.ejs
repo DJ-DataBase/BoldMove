@@ -9,15 +9,14 @@
     </header>
 
   <main>
-    <p></p>
-
         <div>
             <form action="/translate" method="POST">
             <input type="text" name="pleaseTranslate" placeholder = "Type your text" />
                 <fieldset>
                     <button type="submit">Translate</button>
                 </fieldset>
-            </form>        
+            </form>
+            <p><%= translate %></p>      
         </div>
     </main>
     <footer>

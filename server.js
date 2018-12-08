@@ -36,7 +36,7 @@ app.get('/currency', (request, response) => {
   response.render('pages/currency');
 })
 app.get('/translatePage', (request, response) => {
-  response.render('pages/translate')
+  response.render('pages/translateNew')
 })
 app.get('/yelp', showYelpForm);
 app.post('/yelpSearch', showYelpResults);
@@ -62,8 +62,9 @@ let currentLocation = '';
 
 function getLocation (request, response) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
-  //Run through constructor to add info
   currentLocation = request.body.city;
+  console.log('location', currentLocation);
+
   return superagent.get(url)
     .then(res => {
       const location = new Location(request.body.city, res);
@@ -84,19 +85,19 @@ function getRestCountry (country) {
 }
 
 function getTranslation (request, response) {
-  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${Location.currentLocation}';`;
+  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${currentLocation}';`;
   client.query(SQL)
     .then(result => {
       const url = `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_TRANSLATE_API}&q=${request.body.pleaseTranslate}?&target=${result.rows[0].lang_code}`;
       superagent.post(url)
         .then(res => {
           let translatedString = res.body.data.translations[0].translatedText;
+          let newTranString = translatedString.slice(0, translatedString.length - 1);
           console.log('this is our results:', translatedString)
-          response.render('./pages/translate.ejs', {translate: translatedString})
+          response.render('./pages/translate.ejs', {translate: newTranString})
         });
-      // .then(response.redirect('pages/translate'))
     })
-    .catch(console.error('error happened'))
+    .catch(error => handleError(error));
 }
 //verified the show saved works
 function showYelpForm (req, res) {
@@ -106,7 +107,7 @@ function showYelpForm (req, res) {
     .then(yelpDBRestuls => {
       res.render('pages/yelp', {yelpDBRestuls: yelpDBRestuls.rows})
     })
-    .catch(handleError);
+    .catch(error => handleError(error, res));
 }
 
 function showYelpResults (req, res) {
@@ -163,7 +164,6 @@ function Location(query, res) {
 }
 
 Location.tableName = 'locations';
-
 
 Location.prototype.save = function () {
   const SQL = `INSERT INTO locations (city_name, country_name, latitude, longitude) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING RETURNING id;`;
@@ -251,7 +251,6 @@ function handleError(err, res) {
   console.error(err);
   if (res) res.satus(500).send('Error encountered.');
 }
-
 
 // Clear the DB data for a location if it is stale
 function deleteByLocationId(table, city) {
