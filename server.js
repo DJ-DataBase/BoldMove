@@ -65,7 +65,7 @@ function currencyPage(req, res) {
 
 function getLocation (request, response) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.city}&key=${process.env.GEOCODE_API_KEY}`;
-  currentLocation = request.body.city;
+  let currentLocation = request.body.city;
 
 
   return superagent.get(url)
@@ -89,7 +89,7 @@ function getRestCountry (country) {
 }
 
 function getTranslation (request, response) {
-  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${currentLocation}';`;
+  const SQL = `SELECT lang_code FROM locations WHERE city_name = '${let }';`;
   client.query(SQL)
     .then(result => {
       const url = `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_TRANSLATE_API}&q=${request.body.pleaseTranslate}?&target=${result.rows[0].lang_code}`;
@@ -106,7 +106,7 @@ function getTranslation (request, response) {
 
 function currencyConvert (request, response) {
   
-  const SQL = `SELECT DISTINCT currency_code FROM locations WHERE city_name = '${Location.currentLocation}';`;
+  const SQL = `SELECT DISTINCT currency_code FROM locations WHERE city_name = '${Location.let }';`;
   return client.query(SQL)
     .then(currencyCode => {
       console.log('full rows', currencyCode.rows);
