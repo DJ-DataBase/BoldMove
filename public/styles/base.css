@@ -6,7 +6,7 @@
     flex-direction: column;
     flex-wrap: wrap;
   }
-  div img {
+ .topimg {
     /* position: absolute; */
     opacity: .66;
   }
