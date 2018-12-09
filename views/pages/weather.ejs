@@ -9,19 +9,38 @@
   </header>
 
 <main>
+</br>
   <h1>Weather</h1>
   <div class="main-weather"></div>
   <ul class="weather-results">
           <section id="today">
-            <h3><%= weather.currentTemp %></h3>
-            <p><%= weather.currentPrecip %></p>
+          </br>
+            <h2>Today</h2>
+            <h3>Current Temperature: <%= weather.currentTemp %>° F</h3>
+            <p>Chance of Rain: <%= weather.currentPrecip %>%</p>
             <p><%= weather.currentSummary %></p>
+            <p>Humidity: <%= weather.currentHumidity %>%</p>
+            <p>Cloud Cover: <%= weather.currentCloudCover %>%</p>
+            <p> Wind Speed: <%= weather.currentWindSpeed %> MPH</p>
+            <p>Average Visibility: <%= weather.currentVisibility %> Miles</p>
+            
+            
+            
+
+          
           </section>
           <section>
-            <h3><%= weather.tomorrowHigh %></h3>
-            <h3><%= weather.tomorrowLow %></h3>
-            <p><%= weather.tomorrowPrecip %></p>
+          </br>
+            <h2>Tomorrow</h2>
+            <h3>High: <%= weather.tomorrowHigh %>° F</h3>
+            <h3>Low: <%= weather.tomorrowLow %>° F</h3>
             <p><%= weather.tomorrowSummary %></p>
+            <p>Chance of Rain: <%= weather.tomorrowPrecip %>%</p>
+            <p>Humidity: <%= weather.tomorrowHumidity %>%</p>
+            <p>Cloud Cover: <%= weather.tomorrowCloudCover %>%</p>
+            <p>Wind Speed: <%= weather.tomorrowWindSpeed %> MPH</p>
+            <p>Average Visibility: <%= weather.tomorrowVisibility %> Miles</p>
+        </br>
           </section>
 
         </div>
