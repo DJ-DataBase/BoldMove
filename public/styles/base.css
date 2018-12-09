@@ -1,15 +1,20 @@
 /* this is styling for mobile view */
 @media screen and (max-width: 767px) {
   body {
-    width: 100%;
+    max-width: 767px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: beige;
+    /* my margin autos isn't centering the body on mobil for iphone 5, well for any but t is obvious here */
   }
  .topimg {
-    /* position: absolute; */
     opacity: .66;
   }
+
+  /* did this for now because it will be hamburgered, but should check on it's view for after hamburger */
   nav {
     position: absolute;
     top: 0px;
@@ -26,12 +31,10 @@
     top: 0px;
     left: 0px;
     z-index: 5;
-    /* padding: 5% 5% 5% 5%; */
     margin-top: 20px;
     vertical-align: middle;
     color: black;
     font-family: 'Indie Flower', cursive;
-    /* put in a google font here */
   }
 
   h3 {
@@ -43,8 +46,34 @@
   }
 
   p {
+    width: 100%;
     background-color: beige;
   }
+
+  section {
+    display: center;
+    height: 350px;
+    width: 75%;
+    border: 5px solid rgb(117, 6, 6);
+    border-radius: 3px;
+    background-color: beige;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  span {
+    width: 100%;
+    background-color: beige;
+  }
+
+  h4 {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
   footer p {
     height: 25px;
     width: 100%;
@@ -54,16 +83,57 @@
   }
 
   form {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    width: 95%;
+    padding-top: 20px;
+    padding-bottom: 20px;
     background-color: beige;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  button {
-    background-color: rgb(168, 166, 143);
+  #search-button {
+    background-color: rgb(145, 143, 128);
     color: white;
     border-radius: 5px;
   }
+
+  .menuButton {
+    height: 40px;
+    width: 80%;
+    /* display: center; */
+    background-color: rgb(145, 143, 128);
+    color: white;
+    border-radius: 5px;
+    /* margin-left: auto;
+    margin-right: auto; */
+  }
+
+  .generalButton {
+    background-color: rgb(145, 143, 128);
+    color: white;
+    border-radius: 5px;
+  }
+
+  .yelpImg {
+    width: 200px;
+    height: 200px;
+  }
+
+  .yelpLabels {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .yelpLabels span {
+    width: 30%;
+    margin-left: auto;
+  }
+
+  .yelpLabels p {
+    width: 30%;
+    margin-right: auto;
+  }
+
 }
 
 /* this is styling for tablet view */

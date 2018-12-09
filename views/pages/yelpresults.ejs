@@ -11,27 +11,31 @@
       <img class="topimg" src="../img/bagan-1137015_1280resize.jpg">
       <h1>Bold Move</h1>
     </div>
-    <h3>~Yelp Elf Search Results~</h3>
+    <h3>~Yelp Search Results~</h3>
     <ul>
       <%searchResults.forEach( yelp => {%>
         <li>
-          <section></section>
+          <section>
             <h4><a href="<%= yelp.url%>"><%= yelp.name %></a></h4>
-            <span>Rating</span>
-              <p><%= yelp.rating%></p>
-            <span>Price</span>
-              <p><%= yelp.price%></p>
+            <div class="yelpLabels">
+              <span>Rating</span>
+                <p><%= yelp.rating%></p>
+            </div>
+            <div class="yelpLabels">
+              <span>Price</span>
+                <p><%= yelp.price%></p>
+            </div>
+              <img class="yelpImg" src="<%= yelp.image_url %>">
+            <form action="/yelpAdd" method="post">
+              <input type="hidden" value="<%= yelp.name %>" name="name">
+              <input type="hidden" value="<%= yelp.created_at %>" name="created_at">
+              <input type="hidden" value="<%= yelp.rating %>" name="rating">
+              <input type="hidden" value="<%= yelp.price %>" name="price">
+              <input type="hidden" value="<%= yelp.image_url %>" name="image_url"> 
+              <input type="hidden" value="<%= yelp.url %>" name="url"> 
+              <button class="generalButton" type="submit">Save to your Yelp list</button>
+            </form>
           </section>
-          <img src="<%= yelp.image_url %>">
-        <form action="/yelpAdd" method="post">
-          <input type="hidden" value="<%= yelp.name %>" name="name">
-          <input type="hidden" value="<%= yelp.created_at %>" name="created_at">
-          <input type="hidden" value="<%= yelp.rating %>" name="rating">
-          <input type="hidden" value="<%= yelp.price %>" name="price">
-          <input type="hidden" value="<%= yelp.image_url %>" name="image_url"> 
-          <input type="hidden" value="<%= yelp.url %>" name="url"> 
-          <button type="submit">Save to your Yelp list</button>
-        </form>
       </li>
       <% }) %>
     </ul>
