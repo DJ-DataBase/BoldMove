@@ -1,7 +1,27 @@
 /* this is styling for mobile view */
-/* @media screen and (max-width: 767px) {
+@media screen and (max-width: 767px) {
+  form {
+    width: 95%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: beige;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-} */
+  section {
+    display: center;
+    height: 350px;
+    width: 75%;
+    border: 5px solid rgb(117, 6, 6);
+    border-radius: 3px;
+    background-color: beige;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 
 /* this is styling for tablet view */
 /* @media screen and (min-width: 768px) and (max-width: 959px) {

@@ -12,26 +12,22 @@
     <h1>Bold Move</h1>
   </div>
   <h3>~Weather~</h3>
-
 <main>
   <div class="main-weather"></div>
-  <ul class="weather-results">
-          <section id="today">
-            <h3><%= weather.currentTemp %></h3>
-            <p><%= weather.currentPrecip %></p>
-            <p><%= weather.currentSummary %></p>
-          </section>
-          <section>
-            <h3><%= weather.tomorrowHigh %></h3>
-            <h3><%= weather.tomorrowLow %></h3>
-            <p><%= weather.tomorrowPrecip %></p>
-            <p><%= weather.tomorrowSummary %></p>
-          </section>
-
-        </div>
+    <ul class="weather-results">
+      <li id="today">
+        <h4><%= weather.currentTemp %></h4>
+        <p class="weatherP"><%= weather.currentPrecip %></p>
+        <p class="weatherP"><%= weather.currentSummary %></p>
       </li>
-  </ul>
-  
+      <li id="tomorrow">
+        <h4><%= weather.tomorrowHigh %></h4>
+        <h4><%= weather.tomorrowLow %></h4>
+        <p class="weatherP"><%= weather.tomorrowPrecip %></p>
+        <p class="weatherP"><%= weather.tomorrowSummary %></p>
+      </li>
+    </ul>
+  </div>
   </main>
   <footer>
       <%- include('../layout/footer') %>

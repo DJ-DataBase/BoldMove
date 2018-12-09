@@ -13,16 +13,15 @@
     </div>
     <h3>~Currency Converter~</h3>
   <main>
-    <div class = '' id=""></div>
+    <div>
         <form action="/currency" method="POST">          
-          <input class = "" type="number" placeholder = "$ Dollar Amount" name = "currencyReturn"/>                
-            <fieldset >
-                  <button class="generalButton" type= 'submit'>Submit</button>
+            <fieldset id="currencyForm">
+                <input class = "" type="number" placeholder = "$ Dollar Amount" name = "currencyReturn"/>                
+                <button class="generalButton" type= 'submit'>Submit</button>
             </fieldset>
         </form>
-
     </div>
-    </main>
+  </main>
     <footer>
         <%- include('../layout/footer') %>
     </footer>

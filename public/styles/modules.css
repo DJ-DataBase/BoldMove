@@ -1,7 +1,59 @@
 /* this is styling for mobile view */
-/* @media screen and (max-width: 767px) {
+@media screen and (max-width: 767px) {
+  .topimg {
+    opacity: .66;
+  }
+  
+  #search-button {
+    background-color: rgb(145, 143, 128);
+    color: white;
+    border-radius: 5px;
+  }
 
-} */
+  .menuButton {
+    height: 40px;
+    width: 80%;
+    /* display: center; */
+    background-color: rgb(145, 143, 128);
+    color: white;
+    border-radius: 5px;
+    /* margin-left: auto;
+    margin-right: auto; */
+  }
+
+  .generalButton {
+    background-color: rgb(145, 143, 128);
+    color: white;
+    border-radius: 5px;
+  }
+
+  .yelpImg {
+    width: 200px;
+    height: 200px;
+  }
+
+  .yelpLabels {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .yelpLabels span {
+    width: 30%;
+    margin-left: auto;
+  }
+
+  .yelpLabels p {
+    width: 30%;
+    margin-right: auto;
+  }
+
+  .weatherP {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+}
 
 /* this is styling for tablet view */
 /* @media screen and (min-width: 768px) and (max-width: 959px) {

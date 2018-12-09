@@ -10,9 +10,7 @@
     background-color: beige;
     /* my margin autos isn't centering the body on mobil for iphone 5, well for any but t is obvious here */
   }
- .topimg {
-    opacity: .66;
-  }
+
 
   /* did this for now because it will be hamburgered, but should check on it's view for after hamburger */
   nav {
@@ -50,19 +48,6 @@
     background-color: beige;
   }
 
-  section {
-    display: center;
-    height: 350px;
-    width: 75%;
-    border: 5px solid rgb(117, 6, 6);
-    border-radius: 3px;
-    background-color: beige;
-    text-align: center;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
   span {
     width: 100%;
     background-color: beige;
@@ -82,57 +67,6 @@
     background-color: rgb(245, 245, 143);
   }
 
-  form {
-    width: 95%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    background-color: beige;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  #search-button {
-    background-color: rgb(145, 143, 128);
-    color: white;
-    border-radius: 5px;
-  }
-
-  .menuButton {
-    height: 40px;
-    width: 80%;
-    /* display: center; */
-    background-color: rgb(145, 143, 128);
-    color: white;
-    border-radius: 5px;
-    /* margin-left: auto;
-    margin-right: auto; */
-  }
-
-  .generalButton {
-    background-color: rgb(145, 143, 128);
-    color: white;
-    border-radius: 5px;
-  }
-
-  .yelpImg {
-    width: 200px;
-    height: 200px;
-  }
-
-  .yelpLabels {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .yelpLabels span {
-    width: 30%;
-    margin-left: auto;
-  }
-
-  .yelpLabels p {
-    width: 30%;
-    margin-right: auto;
-  }
 
 }
 
