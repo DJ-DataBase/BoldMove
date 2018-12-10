@@ -1,0 +1,84 @@
+.main-menu ul {
+  margin: 0;
+  padding: 2.5em 1em 0;
+  width: 200px;
+  background : rgb(86, 112, 90);
+ }
+ 
+ .main-menu a {
+  display: block;
+  padding: .75em 15px;
+  line-height: 1em;
+  font-size: 1em;
+  color: rgb(238, 232, 232);
+  text-decoration: none;
+  border-bottom: 1px solid #e0dada;
+ }
+ 
+ .main-menu li:first-child a {
+  border-top: 1px solid #383838;
+ }
+ 
+ .main-menu a:hover, .main-menu a:focus {
+  background: #333;
+  text-decoration: underline;
+ }
+ 
+ .main-menu .menu-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+ }
+ 
+ *,* :before, *:after {
+  box-sizing: border-box;
+ }
+ .main-menu:target {
+  left: 0;
+  outline: none;
+  -webkit-box-shadow: 3px 0 12px black;
+  box-shadow: 3px 0 12px black;
+ }
+ 
+ .main-menu:target ul, {
+  position: relative;
+ }
+ 
+ main .pages-body {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(66, 63, 63);
+ }
+ 
+ main .pages-body h2,
+ main .pages-body {
+  display: inline;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+ }
+ 
+ #main-menu-toggle span {
+  background: rgb(212, 202, 202);
+  display: block;
+  height: 5px;
+  width: 30px;
+  margin: 5px 2px 2px 2px;
+ 
+ }
+ 
+ #main-menu-close span {
+  background-color: rgb(243, 234, 234);
+  display: block;
+  height: 4px;
+  width: 20px;
+ 
+ }
+ .main-menu {
+  position: absolute;
+  left: -200px;
+  top: 0;
+  height: 10%;
+ }

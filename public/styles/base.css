@@ -12,12 +12,12 @@
   }
 
   /* did this for now because it will be hamburgered, but should check on it's view for after hamburger */
-  nav {
+  /* nav {
     position: absolute;
     top: 0px;
     left: 0px;
     z-index: 10;
-  }
+  } */
 
   h1 {
     height: 75px;
@@ -94,12 +94,12 @@
   }
 
 /* did this for now because it will be hamburgered, but should check on it's view for after hamburger */
-nav {
+/* nav {
   position: absolute;
   top: 0px;
   left: 0px;
   z-index: 10;
-}
+} */
 
 h1 {
   height: 75px;

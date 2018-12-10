@@ -10,8 +10,11 @@ You have packed up on made a change, now what? A traveller's app for surviving i
 ## Dependencies
 
 acknowledgement: 
-used for image resizing
+Used for image resizing
 https://www.photoresizer.com/
+
+Navigation Hamburger Menu
+Erik Terwan
 
 images: 
 https://pixabay.com/
