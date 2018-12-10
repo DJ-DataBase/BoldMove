@@ -76,6 +76,12 @@
     padding-top: 30px;
   }
 
+  .bioBox img {
+    width: 50%;
+    height: 75%;
+    padding-bottom: 20px;
+  }
+
   .desktopMenuImg {
     height: 0px;
     width: 0px;
@@ -139,7 +145,7 @@
 
   #currencyResultSpace {
     height: 20px;
-    width: 100px;
+    width: 75%;
     padding-top: 2px;
     /* padding: auto; */
     margin: 10px;
@@ -346,7 +352,7 @@
 
   #currencyResultSpace {
     height: 20px;
-    width: 100px;
+    width: 75%;
     padding-top: 2px;
     /* padding: auto; */
     margin: 10px;

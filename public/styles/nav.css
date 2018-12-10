@@ -2,7 +2,7 @@
   margin: 0;
   padding: 2.5em 1em 0;
   width: 200px;
-  background : rgb(86, 112, 90);
+  background : #383838;
  }
  
  .main-menu a {
@@ -62,7 +62,7 @@
  }
  
  #main-menu-toggle span {
-  background: rgb(212, 202, 202);
+  background: rgb(145, 143, 128);
   display: block;
   height: 5px;
   width: 30px;
