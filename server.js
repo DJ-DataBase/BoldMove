@@ -4,7 +4,7 @@
 const express = require('express');
 const superagent = require('superagent');
 const cors = require('cors');
-const pg = require('pg')
+const pg = require('pg');
 
 // load environment variables from .env files
 require ('dotenv').config();
@@ -15,7 +15,7 @@ const app = express();
 app.use(cors())
 
 app.use(express.urlencoded({extended:true}));
-app.use(express.static('public'));
+// app.use(express.static('public'));
 app.use(express.static('public/styles'))
 
 //db config
@@ -230,7 +230,7 @@ function Weather(day) {
   this.tomorrowVisibility = Math.round(day.daily.data[1].visibility);
   this.tomorrowHumidity = Math.round(day.daily.data[1].humidity * 100);
   this.tomorrowWindSpeed = Math.round(day.daily.data[1].windSpeed);
-  this.time = new Date(day.time * 1000).toString().slice(0, 15);
+  this.time = new Date(day.currently.time * 1000).toString().slice(0, 15);
   this.created_at = Date.now();
 }
 
