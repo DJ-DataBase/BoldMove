@@ -8,17 +8,22 @@
       <%- include('../layout/header') %>
     </header>
 
-    <h3>~Currency Converter~</h3>
   <main>
-    <div>
+
+    <div class = '' id=""></div>
+    <p> To help you more with your travel plans, let's check the value of dollar in local currency. </p>
         <form action="/currency" method="POST">          
-            <fieldset id="currencyForm">
-                <input class = "" type="number" placeholder = "$ Dollar Amount" name = "currencyReturn"/>                
-                <button class="generalButton" type= 'submit'>Submit</button>
+          <input class = "" type="number" placeholder = "$ Input Dollar Amount " name = "currencyReturn" id="amount-input"/>                
+            <fieldset >
+                  <button type= 'submit' id="search-button">Click Here to Convert Your Dollar to Local Currency</button>
             </fieldset>
         </form>
+
     </div>
-  </main>
+
+
+    </div>
+    </main>
     <footer>
         <%- include('../layout/footer') %>
     </footer>
