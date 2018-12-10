@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS locations (
     longitude NUMERIC (9, 6),
     currency_code VARCHAR(255),
     currency_symbol VARCHAR(255),
-    lang_code VARCHAR(255)
+    lang_code VARCHAR(255),
+    lang_name VARCHAR(255)
   );
 
   CREATE TABLE IF NOT EXISTS forecasts ( 

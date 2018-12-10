@@ -13,27 +13,27 @@
     <ul class="weather-results">
       <li class="weatherSection">
         <h4>Today's Forecast</h4>
-        <h3>Currently: <%= weather.currentTemp %>° F</h3>
+        <h3>Currently: <%= weather.current_temp %>° F</h3>
           <div id="weatherParagraph">
-            <p>Summary: <%= weather.currentSummary %></p>
-            <p>Chance of Precipitation: <%= weather.currentPrecip %>%</p>
-            <p>Humidity: <%= weather.currentHumidity %>%</p>
-            <p>Cloud Cover: <%= weather.currentCloudCover %>%</p>
-            <p> Wind Speed: <%= weather.currentWindSpeed %> MPH</p>
-            <p>Average Visibility: <%= weather.currentVisibility %> Miles</p>
+            <p>Summary: <%= weather.current_summary %></p>
+            <p>Chance of Precipitation: <%= weather.current_precip %>%</p>
+            <p>Humidity: <%= weather.current_humidity %>%</p>
+            <p>Cloud Cover: <%= weather.current_cloud_cover %>%</p>
+            <p> Wind Speed: <%= weather.current_wind_speed %> MPH</p>
+            <p>Average Visibility: <%= weather.current_visibility %> Miles</p>
           </div>
       </li>
       <li class="weatherSection">
         <h4>Tomorrow's Forecast</h4>
-        <h3>High <%= weather.tomorrowHigh %>° F</h3>
-        <h3>Low <%= weather.tomorrowLow %>° F</h3>
+        <h3>High <%= weather.tomorrow_high %>° F</h3>
+        <h3>Low <%= weather.tomorrow_low %>° F</h3>
           <div id="weatherParagraph">
-            <p>Summary: <%= weather.tomorrowSummary %></p>
-            <p>Chance of Precipitation: <%= weather.tomorrowPrecip %>%</p>
-            <p>Humidity: <%= weather.tomorrowHumidity %>%</p>
-            <p>Cloud Cover: <%= weather.tomorrowCloudCover %>%</p>
-            <p>Wind Speed: <%= weather.tomorrowWindSpeed %> MPH</p>
-            <p>Average Visibility: <%= weather.tomorrowVisibility %> Miles</p>
+            <p>Summary: <%= weather.tomorrow_summary %></p>
+            <p>Chance of Precipitation: <%= weather.tomorrow_precip %>%</p>
+            <p>Humidity: <%= weather.tomorrow_humidity %>%</p>
+            <p>Cloud Cover: <%= weather.tomorrow_cloud_cover %>%</p>
+            <p>Wind Speed: <%= weather.tomorrow_wind_speed %> MPH</p>
+            <p>Average Visibility: <%= weather.tomorrow_visibility %> Miles</p>
           </div>
       </li>
     </ul>
@@ -43,4 +43,3 @@
       <%- include('../layout/footer') %>
   </footer>
 </body>
-</html>
