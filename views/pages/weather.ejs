@@ -15,7 +15,7 @@
         <h4>Today's Forecast</h4>
         <h3>Currently: <%= weather.currentTemp %>° F</h3>
             <div id="weatherParagraph">
-            <p><%= weather.currentSummary %></p>
+            <p>Summary: <%= weather.currentSummary %></p>
             <p>Chance of Precipitation: <%= weather.currentPrecip %>%</p>
             <p>Humidity: <%= weather.currentHumidity %>%</p>
             <p>Cloud Cover: <%= weather.currentCloudCover %>%</p>
@@ -28,13 +28,14 @@
         <h4>Tomorrow's Forecast</h4>
         <h3>High <%= weather.tomorrowHigh %>° F</h3>
         <h3>Low <%= weather.tomorrowLow %>° F</h3>
-          <div id="weatherParagraph"></div>
-            <p><%= weather.tomorrowSummary %></p>
+          <div id="weatherParagraph">
+            <p>Summary: <%= weather.tomorrowSummary %></p>
             <p>Chance of Precipitation: <%= weather.tomorrowPrecip %>%</p>
             <p>Humidity: <%= weather.tomorrowHumidity %>%</p>
             <p>Cloud Cover: <%= weather.tomorrowCloudCover %>%</p>
             <p>Wind Speed: <%= weather.tomorrowWindSpeed %> MPH</p>
             <p>Average Visibility: <%= weather.tomorrowVisibility %> Miles</p>
+          </div>
       </li>
     </ul>
   </div>
