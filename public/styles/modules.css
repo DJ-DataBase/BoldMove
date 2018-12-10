@@ -21,6 +21,8 @@
     border-radius: 5px;
     /* margin-left: auto;
     margin-right: auto; */
+    display: block;
+    margin: 0 auto;
   }
 
   .generalButton {
@@ -120,6 +122,7 @@
     /* float: left; */
     /* margin-left: auto;
     margin-right: auto; */
+ 
   }
 
   .desktopMenuImg {
