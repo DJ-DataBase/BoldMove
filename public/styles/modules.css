@@ -23,6 +23,8 @@
     background-color: rgb(145, 143, 128);
     color: white;
     border-radius: 5px;
+    display: block;
+    margin: 0 auto;
     /* margin-left: auto;
     margin-right: auto; */
   }
@@ -79,6 +81,32 @@
     width: 0px;
     /* just make sure it is hidden */
   }
+
+  .weatherSection {
+    height: 200px;
+    width: 60%;
+    border: 5px solid rgb(12, 1, 112);
+    /* background-color: rgb(58, 58, 219); */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  .weatherSection h4 {
+    width: 100%;
+    border-bottom: 1px solid rgb(12, 1, 112);
+    height: 30px;
+    padding: 4px;
+    background-color: rgb(58, 58, 219);
+  }
+  .weatherSection h3 {
+    font-size: 1.2em;
+  }
+
+  #weatherParagraph {
+    padding: 15px;
+  }
 }
 
 /* this is styling for tablet view */
@@ -102,9 +130,13 @@
   }
 
   #menuButtonContainer {
+    height: 420px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    /* display: inline-block; */
+    margin: 0 auto;
   }
 
   .menuForms {
