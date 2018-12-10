@@ -9,25 +9,29 @@
       <%- include('../layout/header') %>
     </header>
     <div>
-      <img class="topimg" src="../img/bagan-1137015_1280resize.jpg">
+      <img class="topimg" src="../img/bagan-1137015_1280resize2.jpg">
       <h1>Bold Move</h1>
     </div>
     <h3>~Menu~</h3>
-    <form action="/currency" method="get">
-      <button class="menuButton">Currency Converter</button>
-    </form>
-    <form action="/weather" method="get">
-      <button class="menuButton">Weather Forecast</button>
-    </form>
-    <form action="/yelp" method="get">
-      <button class="menuButton">Yelp</button>
-    </form>
-    <form action="/translate" method="GET">
-      <button class="menuButton" type="submit">Translator</button>
-    </form>
-    <form action="/aboutus" method="get">
-      <button class="menuButton">About Team DJDB</button>
-    </form>
+    <div id='menuButtonContainer'>
+      <img class="desktopMenuImg" src= "../img/mixture-69523_1280.jpg">
+      <form class="menuForms" action="/currency" method="get">
+        <button class="menuButton">Currency Converter</button>
+      </form>
+      <img class="desktopMenuImg" src= "../img/passport-2642172_1920.jpg">
+      <form class="menuForms" action="/weather" method="get">
+        <button class="menuButton">Weather Forecast</button>
+      </form>
+      <img class="desktopMenuImg" src= "../img/frogs-897981_1920.jpg">
+      <form class="menuForms" action="/yelp" method="get">
+        <button class="menuButton">Yelp</button>
+      </form>
+      <img class="desktopMenuImg" src= "../img/plane-841441_1920.jpg">
+      <form class="menuForms" action="/translate" method="GET">
+        <button class="menuButton" type="submit">Translator</button>
+      </form>
+      <img class="desktopMenuImg" src= "../img/dictionary-2317654_1920.jpg">
+    </div>
     <footer> <%- include('../layout/footer.ejs') %> </footer>
   </body>
 </html>

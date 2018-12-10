@@ -1,9 +1,11 @@
 /* this is styling for mobile view */
 @media screen and (max-width: 767px) {
   .topimg {
+    height: 100px;
+    width: 100%;
     opacity: .66;
   }
-  
+
   #search-button {
     background-color: rgb(145, 143, 128);
     color: white;
@@ -53,6 +55,26 @@
     margin-right: auto;
     text-align: center;
   }
+
+  .bioBox {
+    display: center;
+    height: 500px;
+    width: 75%;
+    border: 5px solid rgb(117, 6, 6);
+    border-radius: 3px;
+    background-color: beige;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 30px;
+  }
+
+  .desktopMenuImg {
+    height: 0px;
+    width: 0px;
+    /* just make sure it is hidden */
+  }
 }
 
 /* this is styling for tablet view */
@@ -61,6 +83,105 @@
 } */
 
 /* this is styling for desktop views (960 and larger)  */
-/* @media screen and (min-width: 960px) {
- 
-} */
+/* this changes to @media screen and (min-width: 960px) { if we add in tablet */
+@media screen and (min-width: 768px) {
+  .topimg {
+    height: 100px;
+    width: 100%;
+    opacity: .66;
+  }
+
+  #search-button {
+    background-color: rgb(145, 143, 128);
+    color: white;
+    border-radius: 5px;
+  }
+
+  #menuButtonContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .menuForms {
+    width: 20%;
+    height: 100px;;
+    padding: 5px;
+    margin: 20px;
+  }
+
+  .menuButton {
+    height: 100px;
+    width: 90%;
+    /* display: center; */
+    background-color: rgb(255, 171, 15);
+    color: rgb(29, 28, 28);
+    border-radius: 5px;
+    /* float: left; */
+    /* margin-left: auto;
+    margin-right: auto; */
+  }
+
+  .desktopMenuImg {
+    /* do things to unhide the image */
+    height: 100px;
+    width: 20%;
+    padding: 5px;
+    margin: 20px;
+  }
+
+  .generalButton {
+    background-color: rgb(145, 143, 128);
+    color: white;
+    border-radius: 5px;
+  }
+
+  .yelpImg {
+    width: 200px;
+    height: 200px;
+  }
+
+  .yelpLabels {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .yelpLabels span {
+    width: 30%;
+    margin-left: auto;
+  }
+
+  .yelpLabels p {
+    width: 30%;
+    margin-right: auto;
+  }
+
+  .weatherP {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .bioBox {
+    /* display: center; */
+    float: left;
+    width: 40%;
+    height: 350px;
+    list-style-type: none;
+    background-color: rgb(153, 191, 194);
+    border-radius: 10px;
+    box-shadow: 4px 5px 2px rgb(12, 1, 112);
+    text-align: center;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 30px;
+  }
+
+  .bioBox img {
+    width: 50%;
+    height: 250px;
+    padding-bottom: 20px;
+  }
+}

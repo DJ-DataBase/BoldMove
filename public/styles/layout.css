@@ -20,6 +20,7 @@
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
+    padding-top: 20px;
   }
 }
 
@@ -29,6 +30,28 @@
 } */
 
 /* this is styling for desktop views (960 and larger)  */
-/* @media screen and (min-width: 960px) {
- 
-} */
+/* this changes to @media screen and (min-width: 960px) { if we add in tablet */
+@media screen and (min-width: 768px) {
+  form {
+    width: 95%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: beige;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  section {
+    display: center;
+    height: 350px;
+    width: 60%;
+    border: 5px solid rgb(117, 6, 6);
+    border-radius: 3px;
+    background-color: beige;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+  }
+} 
