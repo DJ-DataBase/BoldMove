@@ -115,11 +115,11 @@ Weather.prototype.save = function() {
 
 function YelpObj(place) {
   this.tableName = 'yelp';
-  this.url = place.url;
-  this.name = place.name;
-  this.rating = place.rating;
-  this.price = place.price;
-  this.image_url = place.image_url;
+  this.url = place.url || 'No URL provided';
+  this.name = place.name || 'No name provided';
+  this.rating = place.rating || 'No rating provided';
+  this.price = place.price || 'No price provided';
+  this.image_url = place.image_url || '../img/No-picture.jpg';
   this.created_at = Date.now();
   // console.log('yelpobj', this);
 }
