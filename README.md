@@ -43,9 +43,11 @@ https://codepen.io/erikterwan/pen/EVzeRP
 Navigation Hamburger Menu
 Erik Terwan
 
+
 # Images: 
 https://pixabay.com/
 
 
 ## Database schemas
 We created the locations, forecasts, yelp tables in PosterSQL and stored the information in the local database. The data is first gets stored in locations table which also includes the country's language code and currency code. The yelp table stores information collected from the Yelp API. 
+
