@@ -24,29 +24,28 @@ Superagent
 Cors
 Pg
 Dotenv
+EJS
+Method-Override
 
 # APIs: We used the following APIs to use HTTP requests to get information from multiple web servers. We stored our API keys in .env file that was used in our application to pull information.   
 Yelp
 Currency Layer
+Rest Country
 Dark Sky
 Google Location
 Google Translate
 
 ## Dependencies
-Acknowledgement: 
-Used for image resizing
-https://www.photoresizer.com/
+
+## Acknowledgement: 
+Used for image resizing: https://www.photoresizer.com/ 
+Images: https://pixabay.com/
 
 # CSS:
 https://codepen.io/erikterwan/pen/EVzeRP
 
 Navigation Hamburger Menu
 Erik Terwan
-
-
-# Images: 
-https://pixabay.com/
-
 
 ## Database schemas
 We created the locations, forecasts, yelp tables in PosterSQL and stored the information in the local database. The data is first gets stored in locations table which also includes the country's language code and currency code. The yelp table stores information collected from the Yelp API. 

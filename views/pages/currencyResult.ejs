@@ -7,13 +7,12 @@
     <header>
       <%- include('../layout/header') %>
     </header>
- <h3>~Currency Converter~</h3>
+    <h3>~Currency Converter~</h3>
     <main>
-    <div class = '' id=""></div>
-    
-    <h1>So, this is how much your dollar amount is worth when converting to local currency.</h1> 
-    <p style="font-size:50px;"><%= resultShow %></p>
-    
+      <div id="currencyDiv">
+        <p id="currencyP">In local currency, your USD converts to: </p> 
+        <p id="currencyResultSpace"><%= resultShow %></p>
+      </div>
     </main>
   <footer> <%- include('../layout/footer.ejs') %> </footer>
 
