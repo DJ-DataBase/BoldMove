@@ -201,7 +201,6 @@ function getTranslation (request, response) {
         .then(res => {
           let translatedString = res.body.data.translations[0].translatedText;
           let newTranString = translatedString.slice(0, translatedString.length - 1);
-          // console.log('this is our results:', translatedString)
           response.render('./pages/translate.ejs', {translate: newTranString})
         });
     })
@@ -209,20 +208,21 @@ function getTranslation (request, response) {
 }
 
 function currencyConvert (request, response) {
-  const SQL = `SELECT DISTINCT currency_code FROM locations WHERE city_name = '${currentLocation}';`;
+  const SQL = `SELECT DISTINCT currency_code, currency_symbol FROM locations WHERE city_name = '${currentLocation}';`;
   return client.query(SQL)
     .then(currencyCode => {
-      // console.log('full rows', currencyCode.rows);
+      let currSymbol = currencyCode.rows[0].currency_symbol;
       let currCode = currencyCode.rows[0].currency_code;
       const url = `https://currency-exchange.apphb.com/api/rates?apikey=a84e43b27f20e6645157b29a42f1a25c&provider=currencylayer&fr=USD&to=${currCode}`;
-
+ 
       superagent.get(url)
         .then(res => {
           let result = res.body * request.body.currencyReturn;
-          response.render('pages/currencyResult', {resultShow : result})
+          let resultdec = result.toFixed(2);
+          response.render('pages/currencyResult', {resultShow : resultdec + ' ' + currSymbol})
         })
+        .catch(error => handleError(error, res));
     })
-    .catch(console.error('error happened'))
 }
 
 function showYelpResults (req, res) {
