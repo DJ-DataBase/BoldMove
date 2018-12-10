@@ -33,10 +33,3 @@ CREATE TABLE IF NOT EXISTS locations (
     image_url VARCHAR(255),
     url VARCHAR(255)
   );
-
-INSERT INTO locations (city_name, country_name, latitude, longitude, currency_code, currency_symbol, lang_code) 
-VALUES('paris', 'France', 48.8566, 2.3522, 'EUR', '€', 'fr');
-
-INSERT INTO yelp (name, created_at, rating, price, image_url) 
-VALUES('fake result', 1544208724559, 2, '$', 'https://s3-media3.fl.yelpcdn.com/bphoto/ijju-wYoRAxWjHPTCxyQGQ/o.jpg');
-

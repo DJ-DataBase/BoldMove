@@ -14,4 +14,4 @@ used for image resizing
 https://www.photoresizer.com/
 
 images: 
-https://pixabay.com/en/plane-sunset-airplane-travel-1000996/
+https://pixabay.com/
