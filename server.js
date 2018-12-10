@@ -219,7 +219,7 @@ function currencyConvert (request, response) {
         .then(res => {
           let result = res.body * request.body.currencyReturn;
           let resultdec = result.toFixed(2);
-          response.render('pages/currencyResult', {resultShow : resultdec + ' ' + currSymbol})
+          response.render('pages/currencyResult', {resultShow : '$'+ request.body.currencyReturn + ' is worth ' + resultdec + ' ' + currSymbol})
         })
         .catch(error => handleError(error, res));
     })
