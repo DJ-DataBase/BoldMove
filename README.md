@@ -18,5 +18,3 @@ Erik Terwan
 
 images: 
 https://pixabay.com/
-
-just making a change for ACP and can delete this later
