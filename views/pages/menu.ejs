@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Bold Move</title>
-</head>
-<body>
-    <h1>Bold Move</h1>
-  <h3>~Menu~</h3>
-
-  <form action="/currencyForm" method="post">
-    <button >Currency Converter</button>
-  </form>
-  <form action="/weather" method="get">
-    <button>Weather Forecast</button>
-  </form>
-  <form action="/yelp" method="get">
-    <button>Near Me</button>
-  </form>
-  <form action="/translatePage" method="GET">
-    <button type="submit">Translator</button>
-  </form>
-</body>
+  <head>
+    <%- include('../layout/head') %>
+  </head>
+  <body>
+    <header>
+      <%- include('../layout/header') %>
+    </header>
+    <div>
+      <img class="topimg" src="../img/bagan-1137015_1280resize2.jpg">
+      <h1>Bold Move</h1>
+    </div>
+    <h3>~Menu~</h3>
+    <div id='menuButtonContainer'>
+      <img class="desktopMenuImg" src= "../img/mixture-69523_1280.jpg">
+      <form class="menuForms" action="/currency" method="get">
+        <button class="menuButton">Currency Converter</button>
+      </form>
+      <img class="desktopMenuImg" src= "../img/passport-2642172_1920.jpg">
+      <form class="menuForms" action="/weather" method="get">
+        <button class="menuButton">Weather Forecast</button>
+      </form>
+      <img class="desktopMenuImg" src= "../img/frogs-897981_1920.jpg">
+      <form class="menuForms" action="/yelp" method="get">
+        <button class="menuButton">Find food, entertainment, etc</button>
+      </form>
+      <img class="desktopMenuImg" src= "../img/plane-841441_1920.jpg">
+      <form class="menuForms" action="/translate" method="GET">
+        <button class="menuButton" type="submit">Translator</button>
+      </form>
+      <img class="desktopMenuImg" src= "../img/dictionary-2317654_1920.jpg">
+    </div>
+    <footer> <%- include('../layout/footer.ejs') %> </footer>
+  </body>
 </html>

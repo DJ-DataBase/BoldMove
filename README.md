@@ -9,3 +9,9 @@ You have packed up on made a change, now what? A traveller's app for surviving i
 
 ## Dependencies
 
+acknowledgement: 
+used for image resizing
+https://www.photoresizer.com/
+
+images: 
+https://pixabay.com/

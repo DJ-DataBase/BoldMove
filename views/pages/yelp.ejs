@@ -1,41 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Bold Move</title>
-</head>
-<body>
-  <form action="/yelpSearch" method="POST">
-    <fieldset>
-      <label>
-        <span>Search: </span>
-        <input type="text" name="yelpSearchInquiry" id="search-input" required>
-      </label>
-      <button type="submit">Search</button>
-    </fieldset>
-  </form>
-  <p>Saved Previous Searches: </p>
-  <ul>
-    <% yelpDBRestuls.forEach( yelp => { %>
-      <li>
-        <section></section>
-          <h4><%= yelp.name %></h4>
-          <span>URL</span>
-            <p><%= yelp.url%></p>
-          <span>Rating</span>
-            <p><%= yelp.rating%></p>
-          <span>Price</span>
-            <p><%= yelp.price%></p>
-        </section>
-        <img src="<%= yelp.image_url %>"> 
-        <form action="/yelpDelete/<%= yelp.id %>" method="post">
-            <input type="hidden" name="_method" value="delete">
-            <button type="submit">Delete from your Yelp list</button>
-        </form>
-      </li>
-    <% }) %>
-  </ul>
-</body>
+<html>
+  <head>
+    <%- include('../layout/head') %>
+  </head>
+  <body>
+    <header>
+      <%- include('../layout/header') %>
+    </header>
+    <div>
+      <img class="topimg" src="../img/bagan-1137015_1280resize2.jpg">
+      <h1>Bold Move</h1>
+    </div>
+    <h3>~Yelp~</h3>
+    <form action="/yelpSearch" method="POST">
+      <fieldset>
+        <label>
+          <span>Search: </span>
+          <input type="text" name="yelpSearchInquiry" id="search-input" required>
+        </label>
+        <button class="generalButton" type="submit">Search</button>
+      </fieldset>
+    </form>
+    <h4>Saved Previous Searches: </h4>
+    <ul>
+      <% yelpDBRestuls.forEach( yelp => { %>
+        <li>
+          <section>
+            <h4><a href="<%= yelp.url%>" target="_blank"><%= yelp.name %></a></h4>
+            <div class="yelpLabels">
+              <span>Rating</span>
+                <p><%= yelp.rating%></p>
+            </div>
+            <div class="yelpLabels">
+              <span>Price</span>
+                <p><%= yelp.price%></p>
+            </div>
+            <img class="yelpImg" src="<%= yelp.image_url %>"> 
+            <form action="/yelpDelete/<%= yelp.id %>" method="post">
+              <input type="hidden" name="_method" value="delete">
+              <button class="generalButton" type="submit">Delete from your Yelp list</button>
+            </form>
+          </section>
+        </li>
+      <% }) %>
+    </ul>
+    <footer> <%- include('../layout/footer.ejs') %> </footer>
+  </body>
 </html>
