@@ -7,13 +7,13 @@
     <header>
       <%- include('../layout/header') %>
     </header>
-
+    <h3>~Translation~</h3>
   <main>
         <div>
             <form action="/translate" method="POST">
             <input type="text" name="pleaseTranslate" placeholder = "Type your text" />
                 <fieldset>
-                    <button type="submit">Translate</button>
+                    <button class="generalButton" type="submit">Translate</button>
                 </fieldset>
             </form>
             <p><%= translate %></p>      
