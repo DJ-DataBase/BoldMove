@@ -54,4 +54,10 @@
     margin-right: auto;
     padding-top: 20px;
   }
+
+  #aboutContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 } 

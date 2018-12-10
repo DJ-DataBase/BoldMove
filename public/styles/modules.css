@@ -115,6 +115,66 @@
     font-weight: bold;
     overflow: hidden;
   }
+
+  #currencyDiv {
+    margin-top: 15px;
+    height: 100px;
+    width: 60%;
+    border: 5px solid rgb(12, 1, 112);
+    /* background-color: rgb(58, 58, 219); */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  #currencyP {
+    padding: 17px;
+    height: 20px;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #currencyResultSpace {
+    height: 20px;
+    width: 100px;
+    padding-top: 2px;
+    /* padding: auto; */
+    margin: 10px;
+    text-align: center;
+    background: white;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #translateDiv {
+    margin-top: 15px;
+    height: 150px;
+    width: 60%;
+    border: 5px solid rgb(12, 1, 112);
+    /* background-color: rgb(58, 58, 219); */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  #translatedSpace {
+    height: 30px;
+    width: 80%;
+    padding-top: 5px;
+    /* padding: auto; */
+    margin: 10px;
+    text-align: center;
+    background: white;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
 }
 
 /* this is styling for tablet view */
@@ -230,6 +290,7 @@
   }
 
   .weatherSection {
+    margin-top: 15px;
     height: 250px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
@@ -262,4 +323,64 @@
     font-weight: bold;
     overflow: hidden;
   }
+
+  #currencyDiv {
+    margin-top: 15px;
+    height: 100px;
+    width: 60%;
+    border: 5px solid rgb(12, 1, 112);
+    /* background-color: rgb(58, 58, 219); */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  #currencyP {
+    padding: 17px;
+    height: 20px;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #currencyResultSpace {
+    height: 20px;
+    width: 100px;
+    padding-top: 2px;
+    /* padding: auto; */
+    margin: 10px;
+    text-align: center;
+    background: white;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #translateDiv {
+    margin-top: 15px;
+    height: 150px;
+    width: 60%;
+    border: 5px solid rgb(12, 1, 112);
+    /* background-color: rgb(58, 58, 219); */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  #translatedSpace {
+    height: 30px;
+    width: 80%;
+    padding-top: 5px;
+    /* padding: auto; */
+    margin: 10px;
+    text-align: center;
+    background: white;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
 }
