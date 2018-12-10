@@ -4,6 +4,10 @@
     height: 100px;
     width: 100%;
     opacity: .66;
+    display: absolute;
+    top: 0px;
+    left: 0px;
+    /* position: inline-block; */
   }
 
   #search-button {

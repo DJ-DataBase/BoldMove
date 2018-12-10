@@ -28,6 +28,7 @@
   position: absolute;
   right: 0;
   top: 0;
+  z-index: 10;
  }
  
  *,* :before, *:after {
@@ -66,19 +67,25 @@
   height: 5px;
   width: 30px;
   margin: 5px 2px 2px 2px;
- 
+  z-index: 10;
  }
  
+ #main-menu-toggle {
+   position: absolute;
+   z-index: 10;
+ }
+
  #main-menu-close span {
   background-color: rgb(243, 234, 234);
   display: block;
   height: 4px;
   width: 20px;
- 
  }
+
  .main-menu {
   position: absolute;
   left: -200px;
   top: 0;
   height: 10%;
+  z-index: 10;
  }
