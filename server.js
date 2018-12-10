@@ -4,7 +4,7 @@
 const express = require('express');
 const superagent = require('superagent');
 const cors = require('cors');
-const pg = require('pg')
+const pg = require('pg');
 
 // load environment variables from .env files
 require ('dotenv').config();
@@ -95,21 +95,29 @@ RestCountryObj.prototype.save = function (location_name) {
 
 function Weather(day) {
   this.tableName = 'forecasts';
-  this.currentTemp = day.currently.temperature;
-  this.currentPrecip = day.currently.precipProbability;
+  this.currentTemp = Math.round(day.currently.temperature);
   this.currentSummary = day.currently.summary;
-  this.tomorrowHigh = day.daily.data[1].temperatureHigh;
-  this.tomorrowLow = day.daily.data[1].temperatureLow;
-  this.tomorrowPrecip = day.daily.data[1].precipProbability;
-  this.time = new Date(day.time * 1000).toString().slice(0, 15);
+  this.currentPrecip = Math.round(day.currently.precipProbability * 100);
+  this.currentCloudCover = Math.round(day.currently.cloudCover * 100);
+  this.currentVisibility = Math.round(day.currently.visibility);
+  this.currentHumidity = Math.round(day.currently.humidity * 100);
+  this.currentWindSpeed = Math.round(day.currently.windSpeed);
+  this.tomorrowHigh = Math.round(day.daily.data[1].temperatureHigh);
+  this.tomorrowLow = Math.round(day.daily.data[1].temperatureLow);
+  this.tomorrowSummary = day.daily.data[1].summary;
+  this.tomorrowPrecip = Math.round(day.daily.data[1].precipProbability * 100);
+  this.tomorrowCloudCover = Math.round(day.daily.data[1].cloudCover * 100);
+  this.tomorrowVisibility = Math.round(day.daily.data[1].visibility);
+  this.tomorrowHumidity = Math.round(day.daily.data[1].humidity * 100);
+  this.tomorrowWindSpeed = Math.round(day.daily.data[1].windSpeed);
+  this.time = new Date(day.currently.time * 1000).toString().slice(0, 15);
   this.created_at = Date.now();
 }
-
 Weather.tableName = 'forecasts';
 
 Weather.prototype.save = function() {
-  const SQL = `INSERT INTO ${this.tableName} (current_temp, current_precip, current_summary, tomorrow_high, tomorrow_low, tomorrow_precip, time, created_at, location_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
-  const values = [this.currentTemp, this.currentPrecip, this.currentSummary, this.tomorrowHigh, this.tomorrowLow, this.tomorrowPrecip, this.time, this.created_at,currentLocation];
+  const SQL = `INSERT INTO ${this.tableName} (current_temp,  current_summary, current_precip, current_cloud_cover, current_visibility, current_humidity, current_wind_speed, tomorrow_high, tomorrow_low, tomorrow_summary, tomorrow_precip, tomorrow_cloud_cover, tomorrow_visibility, tomorrow_humidity, tomorrow_wind_speed, time, created_at, location_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18);`;
+  const values = [this.currentTemp, this.currentSummary, this.currentPrecip, this.currentCloudCover, this.currentVisibility, this.currentHumidity, this.currentWindSpeed, this.tomorrowHigh, this.tomorrowLow, this.tomorrowSummary, this.tomorrowPrecip, this.tomorrowCloudCover, this.tomorrowVisibility, this.tomorrowHumidity, this.tomorrowWindSpeed, this.time, this.created_at,currentLocation];
   client.query(SQL, values);
 }
 

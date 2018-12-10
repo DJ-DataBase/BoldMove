@@ -12,15 +12,26 @@
   <div class="main-weather"></div>
     <ul class="weather-results">
       <li id="today">
-        <h4><%= weather.currentTemp %></h4>
-        <p class="weatherP"><%= weather.currentPrecip %></p>
-        <p class="weatherP"><%= weather.currentSummary %></p>
+        <h4>Currently <%= weather.currentTemp %>° F</h4>
+        <p><%= weather.currentSummary %></p>
+        <p>Chance of Precipitation: <%= weather.currentPrecip %>%</p>
+        <p>Humidity: <%= weather.currentHumidity %>%</p>
+        <p>Cloud Cover: <%= weather.currentCloudCover %>%</p>
+        <p> Wind Speed: <%= weather.currentWindSpeed %> MPH</p>
+        <p>Average Visibility: <%= weather.currentVisibility %> Miles</p>
+        
+    
       </li>
       <li id="tomorrow">
-        <h4><%= weather.tomorrowHigh %></h4>
-        <h4><%= weather.tomorrowLow %></h4>
-        <p class="weatherP"><%= weather.tomorrowPrecip %></p>
-        <p class="weatherP"><%= weather.tomorrowSummary %></p>
+        
+        <h4>High <%= weather.tomorrowHigh %>° F</h4>
+        <h4>Low <%= weather.tomorrowLow %>° F</h4>
+        <p><%= weather.tomorrowSummary %></p>
+        <p>Chance of Precipitation: <%= weather.tomorrowPrecip %>%</p>
+        <p>Humidity: <%= weather.tomorrowHumidity %>%</p>
+        <p>Cloud Cover: <%= weather.tomorrowCloudCover %>%</p>
+        <p>Wind Speed: <%= weather.tomorrowWindSpeed %> MPH</p>
+        <p>Average Visibility: <%= weather.tomorrowVisibility %> Miles</p>
       </li>
     </ul>
   </div>
