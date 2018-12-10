@@ -4,6 +4,10 @@
     height: 100px;
     width: 100%;
     opacity: .66;
+    display: absolute;
+    top: 0px;
+    left: 0px;
+    /* position: inline-block; */
   }
 
   #search-button {
@@ -19,6 +23,8 @@
     background-color: rgb(145, 143, 128);
     color: white;
     border-radius: 5px;
+    display: block;
+    margin: 0 auto;
     /* margin-left: auto;
     margin-right: auto; */
   }
@@ -75,6 +81,99 @@
     width: 0px;
     /* just make sure it is hidden */
   }
+
+  .weatherSection {
+    height: 250px;
+    width: 60%;
+    border: 5px solid rgb(12, 1, 112);
+    /* background-color: rgb(58, 58, 219); */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  .weatherSection h4 {
+    width: 100%;
+    border-bottom: 1px solid rgb(12, 1, 112);
+    height: 30px;
+    padding: 4px;
+    background-color: rgb(58, 58, 219);
+  }
+  .weatherSection h3 {
+    /* display: center; */
+    /* margin:auto; */
+    font-weight: bold;
+    width: 100%;
+    font-size: 1.2em;
+  }
+
+  #weatherParagraph {
+    width: 100%;
+    height: 150px;
+    padding: 25px;
+    font-weight: bold;
+    overflow: hidden;
+  }
+
+  #currencyDiv {
+    margin-top: 15px;
+    height: 100px;
+    width: 60%;
+    border: 5px solid rgb(12, 1, 112);
+    /* background-color: rgb(58, 58, 219); */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  #currencyP {
+    padding: 17px;
+    height: 20px;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #currencyResultSpace {
+    height: 20px;
+    width: 100px;
+    padding-top: 2px;
+    /* padding: auto; */
+    margin: 10px;
+    text-align: center;
+    background: white;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #translateDiv {
+    margin-top: 15px;
+    height: 150px;
+    width: 60%;
+    border: 5px solid rgb(12, 1, 112);
+    /* background-color: rgb(58, 58, 219); */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  #translatedSpace {
+    height: 30px;
+    width: 80%;
+    padding-top: 5px;
+    /* padding: auto; */
+    margin: 10px;
+    text-align: center;
+    background: white;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* this is styling for tablet view */
@@ -98,9 +197,13 @@
   }
 
   #menuButtonContainer {
+    height: 420px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    /* display: inline-block; */
+    margin: 0 auto;
   }
 
   .menuForms {
@@ -183,5 +286,99 @@
     width: 50%;
     height: 250px;
     padding-bottom: 20px;
+  }
+
+  .weatherSection {
+    margin-top: 15px;
+    height: 250px;
+    width: 60%;
+    border: 5px solid rgb(12, 1, 112);
+    /* background-color: rgb(58, 58, 219); */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  .weatherSection h4 {
+    width: 100%;
+    border-bottom: 1px solid rgb(12, 1, 112);
+    height: 30px;
+    padding: 4px;
+    background-color: rgb(58, 58, 219);
+  }
+  .weatherSection h3 {
+    /* display: center; */
+    /* margin:auto; */
+    font-weight: bold;
+    width: 100%;
+    font-size: 1.2em;
+  }
+
+  #weatherParagraph {
+    width: 100%;
+    height: 150px;
+    padding: 25px;
+    font-weight: bold;
+    overflow: hidden;
+  }
+
+  #currencyDiv {
+    margin-top: 15px;
+    height: 100px;
+    width: 60%;
+    border: 5px solid rgb(12, 1, 112);
+    /* background-color: rgb(58, 58, 219); */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  #currencyP {
+    padding: 17px;
+    height: 20px;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #currencyResultSpace {
+    height: 20px;
+    width: 100px;
+    padding-top: 2px;
+    /* padding: auto; */
+    margin: 10px;
+    text-align: center;
+    background: white;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #translateDiv {
+    margin-top: 15px;
+    height: 150px;
+    width: 60%;
+    border: 5px solid rgb(12, 1, 112);
+    /* background-color: rgb(58, 58, 219); */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  #translatedSpace {
+    height: 30px;
+    width: 80%;
+    padding-top: 5px;
+    /* padding: auto; */
+    margin: 10px;
+    text-align: center;
+    background: white;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
