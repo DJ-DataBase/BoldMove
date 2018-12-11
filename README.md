@@ -44,6 +44,7 @@ The User does not need to download anything to use BoldMove. The user needs to i
 - Used for image resizing: https://www.photoresizer.com/ 
 - Images: https://pixabay.com/
 - Used for hamburger: https://codepen.io/erikterwan/pen/EVzeRP
+- Used for favicon: https://www.freefavicon.com/freefavicons/objects/
 
 ## Database schemas: 
 Our SQL tables are: 
