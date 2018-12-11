@@ -30,12 +30,14 @@
 
   .yelpImg {
     width: 200px;
-    height: 200px;
+    margin: 10px auto;
+    border-radius: 5px;
   }
 
   .yelpLabels {
     display: flex;
     flex-direction: row;
+    margin-top: 5px;
   }
 
   .yelpLabels span {
@@ -57,22 +59,22 @@
 
   .bioBox {
     display: center;
-    height: 500px;
     width: 75%;
     border: 5px solid rgb(12, 1, 112);
     border-radius: 10px;
     background-color: beige;
     text-align: center;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 30px;
+    margin: 25px auto;
+    padding: 15px;
+  }
+
+  .bioBox:last-of-type {
+    margin-bottom: 50px;
   }
 
   .bioBox img {
-    width: 50%;
-    height: 75%;
-    padding-bottom: 20px;
+    width: 70%;
+    border-radius: 5px;
   }
 
   .desktopMenuImg {
@@ -82,21 +84,17 @@
   }
 
   .weatherSection {
-    height: 250px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 15px;
+    margin: 15px auto;
   }
 
   .weatherSection h4 {
     width: 100%;
-    border-bottom: 1px solid rgb(12, 1, 112);
     height: 30px;
     padding: 4px;
-    background-color: rgb(58, 58, 219);
+    background-color: lightblue;
   }
   .weatherSection h3 {
     font-weight: bold;
@@ -106,14 +104,15 @@
 
   #weatherParagraph {
     width: 100%;
-    height: 150px;
-    padding: 25px;
+    padding: 5px 15px 5px 15px;
+    line-height: 1.1em;
+  }
+
+  #weatherParagraph p span {
     font-weight: bold;
-    overflow: hidden;
   }
 
   #currencyDiv {
-    /* height: 100px; */
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
     text-align: center;
@@ -135,6 +134,16 @@
     border: 1px solid black;
     margin: 2px auto;
     display: inline-block;
+  }
+
+  #currencyForm {
+    display: flex;
+    justify-content: center;
+  }
+
+  #translateForm {
+    display: flex;
+    justify-content: center;
   }
 
   #translateDiv {
@@ -213,7 +222,7 @@
 
   .yelpImg {
     width: 200px;
-    height: 200px;
+    margin: 20px auto;
   }
 
   .yelpLabels {
