@@ -10,7 +10,6 @@
 
   section {
     display: center;
-    height: 350px;
     width: 75%;
     border: 5px solid rgb(12, 1, 112);
     border-radius: 3px;
@@ -34,6 +33,7 @@
   margin: 0px auto;
   margin-top: 5px;
 }
+
 
 /* this is styling for desktop views (960 and larger)  */
 
