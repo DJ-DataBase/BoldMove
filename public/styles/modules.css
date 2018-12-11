@@ -7,33 +7,24 @@
     display: absolute;
     top: 0px;
     left: 0px;
-    /* position: inline-block; */
   }
 
   #search-button {
     background-color: rgb(145, 143, 128);
-    color: white;
     border-radius: 5px;
   }
 
   .menuButton {
     height: 40px;
     width: 80%;
-    /* display: center; */
-    background-color: rgb(145, 143, 128);
-    color: white;
+    background-color: rgb(245, 245, 143);
     border-radius: 5px;
-    display: block;
-    margin: 0 auto;
-    /* margin-left: auto;
-    margin-right: auto; */
     display: block;
     margin: 0 auto;
   }
 
   .generalButton {
     background-color: rgb(145, 143, 128);
-    color: white;
     border-radius: 5px;
   }
 
@@ -94,7 +85,6 @@
     height: 250px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -109,8 +99,6 @@
     background-color: rgb(58, 58, 219);
   }
   .weatherSection h3 {
-    /* display: center; */
-    /* margin:auto; */
     font-weight: bold;
     width: 100%;
     font-size: 1.2em;
@@ -125,37 +113,28 @@
   }
 
   #currencyDiv {
-    margin-top: 15px;
-    height: 100px;
+    /* height: 100px; */
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 15px;
-  }
+    margin: 25px auto;
+    }
 
   #currencyP {
-    padding: 17px;
-    height: 20px;
-    width: 100%;
+    height: 40%;
+    width: 90%;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 10px auto;
   }
 
   #currencyResultSpace {
-    height: 20px;
-    width: 75%;
-    padding-top: 2px;
-    /* padding: auto; */
-    margin: 10px;
-    text-align: center;
-    background: white;
+    height: 1.4em;
+    width: 90%;
+    padding: 2px;
+    background: whitesmoke;
     border: 1px solid black;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 2px auto;
+    display: inline-block;
   }
 
   #translateDiv {
@@ -163,7 +142,6 @@
     height: 150px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -174,23 +152,16 @@
     height: 30px;
     width: 80%;
     padding-top: 5px;
-    /* padding: auto; */
     margin: 10px;
     text-align: center;
-    background: white;
+    background: whitesmoke;
     border: 1px solid black;
     margin-left: auto;
     margin-right: auto;
   }
 }
 
-/* this is styling for tablet view */
-/* @media screen and (min-width: 768px) and (max-width: 959px) {
-  
-} */
-
 /* this is styling for desktop views (960 and larger)  */
-/* this changes to @media screen and (min-width: 960px) { if we add in tablet */
 @media screen and (min-width: 768px) {
   .topimg {
     height: 100px;
@@ -200,7 +171,6 @@
 
   #search-button {
     background-color: rgb(145, 143, 128);
-    color: white;
     border-radius: 5px;
   }
 
@@ -210,7 +180,6 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    /* display: inline-block; */
     margin: 0 auto;
   }
 
@@ -224,14 +193,9 @@
   .menuButton {
     height: 100px;
     width: 90%;
-    /* display: center; */
     background-color: rgb(255, 171, 15);
     color: rgb(29, 28, 28);
     border-radius: 5px;
-    /* float: left; */
-    /* margin-left: auto;
-    margin-right: auto; */
- 
   }
 
   .desktopMenuImg {
@@ -244,7 +208,6 @@
 
   .generalButton {
     background-color: rgb(145, 143, 128);
-    color: white;
     border-radius: 5px;
   }
 
@@ -276,7 +239,6 @@
   }
 
   .bioBox {
-    /* display: center; */
     float: left;
     width: 40%;
     height: 350px;
@@ -302,7 +264,6 @@
     height: 250px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -317,8 +278,6 @@
     background-color: rgb(58, 58, 219);
   }
   .weatherSection h3 {
-    /* display: center; */
-    /* margin:auto; */
     font-weight: bold;
     width: 100%;
     font-size: 1.2em;
@@ -337,7 +296,6 @@
     height: 100px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -357,10 +315,9 @@
     height: 20px;
     width: 75%;
     padding-top: 2px;
-    /* padding: auto; */
     margin: 10px;
     text-align: center;
-    background: white;
+    background: whitesmoke;
     border: 1px solid black;
     margin-left: auto;
     margin-right: auto;
@@ -371,7 +328,6 @@
     height: 150px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -382,10 +338,9 @@
     height: 30px;
     width: 80%;
     padding-top: 5px;
-    /* padding: auto; */
     margin: 10px;
     text-align: center;
-    background: white;
+    background: whitesmoke;
     border: 1px solid black;
     margin-left: auto;
     margin-right: auto;
