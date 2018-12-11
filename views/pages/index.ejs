@@ -8,14 +8,13 @@
       <img class="topimg" src="../img/bagan-1137015_1280resize2.jpg">
       <h1>Bold Move</h1>
     </div>
-    <h3>~Location~</h3>
-    <p>On your next trip let us be your one stop shop for everything food, weather, currency, translation & More. </p>
-    <p>Simply enter a city anywhere around the world and go forth!</p>
-    <form action="/location" method="POST">
+    <h3>~Search Location~</h3>
+    <p class="index-intro">Now that you've arrived at your destination, let us be your one stop shop for everything food, weather, currency, translation & more! </p>
+    <form action="/location"  method="POST">
       <fieldset>
         <label>
           <span>Please enter a location: </span>
-          <input type="text" name="city" id="search-input" required>
+          <input type="text" name="city" id="search-input" placeholder = "Where are you?" required>
         </label>
         <button type="submit" id="search-button">Make your move!</button>
       </fieldset>

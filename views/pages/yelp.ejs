@@ -7,7 +7,7 @@
     <header>
       <%- include('../layout/header') %>
     </header>
-    <h3>~Yelp~</h3>
+    <h3>~Explore Nearby~</h3>
     <form action="/yelpSearch" method="POST">
       <fieldset>
         <label>
@@ -34,7 +34,7 @@
             <img class="yelpImg" src="<%= yelp.image_url %>"> 
             <form action="/yelpDelete/<%= yelp.id %>" method="post">
               <input type="hidden" name="_method" value="delete">
-              <button class="generalButton" type="submit">Delete from your Yelp list</button>
+              <button class="generalButton" type="submit">Delete from your Results List</button>
             </form>
           </section>
         </li>
