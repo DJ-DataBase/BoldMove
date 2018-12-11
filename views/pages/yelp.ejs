@@ -7,12 +7,11 @@
     <header>
       <%- include('../layout/header') %>
     </header>
-    <h3>~Yelp~</h3>
-    <form action="/yelpSearch" method="POST">
+    <h3>~Explore Nearby~</h3>
+    <form action="/yelpSearch" method="POST" id="yelpform">
       <fieldset>
         <label>
-          <span>Search: </span>
-          <input type="text" name="yelpSearchInquiry" id="search-input" required>
+          <input type="text" name="yelpSearchInquiry" id="search-input" required placeholder="Find something nearby">
         </label>
         <button class="generalButton" type="submit">Search</button>
       </fieldset>
@@ -21,7 +20,7 @@
     <ul>
       <% yelpDBRestuls.forEach( yelp => { %>
         <li>
-          <section>
+          <section class="yelpContainer">
             <h4><a href="<%= yelp.url%>" target="_blank"><%= yelp.name %></a></h4>
             <div class="yelpLabels">
               <span>Rating</span>
@@ -34,7 +33,7 @@
             <img class="yelpImg" src="<%= yelp.image_url %>"> 
             <form action="/yelpDelete/<%= yelp.id %>" method="post">
               <input type="hidden" name="_method" value="delete">
-              <button class="generalButton" type="submit">Delete from your Yelp list</button>
+              <button class="generalButton" type="submit">Delete from your Results List</button>
             </form>
           </section>
         </li>

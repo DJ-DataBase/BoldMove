@@ -7,44 +7,37 @@
     display: absolute;
     top: 0px;
     left: 0px;
-    /* position: inline-block; */
   }
 
   #search-button {
     background-color: rgb(145, 143, 128);
-    color: white;
     border-radius: 5px;
   }
 
   .menuButton {
     height: 40px;
     width: 80%;
-    /* display: center; */
-    background-color: rgb(145, 143, 128);
-    color: white;
+    background-color: rgb(245, 245, 143);
     border-radius: 5px;
-    display: block;
-    margin: 0 auto;
-    /* margin-left: auto;
-    margin-right: auto; */
     display: block;
     margin: 0 auto;
   }
 
   .generalButton {
     background-color: rgb(145, 143, 128);
-    color: white;
     border-radius: 5px;
   }
 
   .yelpImg {
     width: 200px;
-    height: 200px;
+    margin: 10px auto;
+    border-radius: 5px;
   }
 
   .yelpLabels {
     display: flex;
     flex-direction: row;
+    margin-top: 5px;
   }
 
   .yelpLabels span {
@@ -66,22 +59,22 @@
 
   .bioBox {
     display: center;
-    height: 500px;
     width: 75%;
     border: 5px solid rgb(12, 1, 112);
     border-radius: 10px;
     background-color: beige;
     text-align: center;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 30px;
+    margin: 25px auto;
+    padding: 15px;
+  }
+
+  .bioBox:last-of-type {
+    margin-bottom: 50px;
   }
 
   .bioBox img {
-    width: 50%;
-    height: 75%;
-    padding-bottom: 20px;
+    width: 70%;
+    border-radius: 5px;
   }
 
   .desktopMenuImg {
@@ -91,26 +84,19 @@
   }
 
   .weatherSection {
-    height: 250px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 15px;
+    margin: 15px auto;
   }
 
   .weatherSection h4 {
     width: 100%;
-    border-bottom: 1px solid rgb(12, 1, 112);
     height: 30px;
     padding: 4px;
-    background-color: rgb(58, 58, 219);
+    background-color: lightblue;
   }
   .weatherSection h3 {
-    /* display: center; */
-    /* margin:auto; */
     font-weight: bold;
     width: 100%;
     font-size: 1.2em;
@@ -118,44 +104,47 @@
 
   #weatherParagraph {
     width: 100%;
-    height: 150px;
-    padding: 25px;
+    padding: 5px 15px 5px 15px;
+    line-height: 1.1em;
+  }
+
+  #weatherParagraph p span {
     font-weight: bold;
-    overflow: hidden;
+    
   }
 
   #currencyDiv {
-    margin-top: 15px;
-    height: 100px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 15px;
-  }
+    margin: 25px auto;
+    }
 
   #currencyP {
-    padding: 17px;
-    height: 20px;
-    width: 100%;
+    height: 40%;
+    width: 90%;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 10px auto;
   }
 
   #currencyResultSpace {
-    height: 20px;
-    width: 75%;
-    padding-top: 2px;
-    /* padding: auto; */
-    margin: 10px;
-    text-align: center;
-    background: white;
+    height: 1.4em;
+    width: 90%;
+    padding: 2px;
+    background: whitesmoke;
     border: 1px solid black;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 2px auto;
+    display: inline-block;
+  }
+
+  #currencyForm {
+    display: flex;
+    justify-content: center;
+  }
+
+  #translateForm {
+    display: flex;
+    justify-content: center;
   }
 
   #translateDiv {
@@ -163,7 +152,6 @@
     height: 150px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -174,23 +162,16 @@
     height: 30px;
     width: 80%;
     padding-top: 5px;
-    /* padding: auto; */
     margin: 10px;
     text-align: center;
-    background: white;
+    background: whitesmoke;
     border: 1px solid black;
     margin-left: auto;
     margin-right: auto;
   }
 }
 
-/* this is styling for tablet view */
-/* @media screen and (min-width: 768px) and (max-width: 959px) {
-  
-} */
-
 /* this is styling for desktop views (960 and larger)  */
-/* this changes to @media screen and (min-width: 960px) { if we add in tablet */
 @media screen and (min-width: 768px) {
   .topimg {
     height: 100px;
@@ -200,7 +181,6 @@
 
   #search-button {
     background-color: rgb(145, 143, 128);
-    color: white;
     border-radius: 5px;
   }
 
@@ -210,7 +190,6 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    /* display: inline-block; */
     margin: 0 auto;
   }
 
@@ -224,14 +203,9 @@
   .menuButton {
     height: 100px;
     width: 90%;
-    /* display: center; */
     background-color: rgb(255, 171, 15);
     color: rgb(29, 28, 28);
     border-radius: 5px;
-    /* float: left; */
-    /* margin-left: auto;
-    margin-right: auto; */
- 
   }
 
   .desktopMenuImg {
@@ -244,13 +218,12 @@
 
   .generalButton {
     background-color: rgb(145, 143, 128);
-    color: white;
     border-radius: 5px;
   }
 
   .yelpImg {
     width: 200px;
-    height: 200px;
+    margin: 20px auto;
   }
 
   .yelpLabels {
@@ -276,7 +249,6 @@
   }
 
   .bioBox {
-    /* display: center; */
     float: left;
     width: 40%;
     height: 350px;
@@ -302,7 +274,6 @@
     height: 250px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -317,8 +288,6 @@
     background-color: rgb(58, 58, 219);
   }
   .weatherSection h3 {
-    /* display: center; */
-    /* margin:auto; */
     font-weight: bold;
     width: 100%;
     font-size: 1.2em;
@@ -337,7 +306,6 @@
     height: 100px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -357,10 +325,9 @@
     height: 20px;
     width: 75%;
     padding-top: 2px;
-    /* padding: auto; */
     margin: 10px;
     text-align: center;
-    background: white;
+    background: whitesmoke;
     border: 1px solid black;
     margin-left: auto;
     margin-right: auto;
@@ -371,7 +338,6 @@
     height: 150px;
     width: 60%;
     border: 5px solid rgb(12, 1, 112);
-    /* background-color: rgb(58, 58, 219); */
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -382,10 +348,9 @@
     height: 30px;
     width: 80%;
     padding-top: 5px;
-    /* padding: auto; */
     margin: 10px;
     text-align: center;
-    background: white;
+    background: whitesmoke;
     border: 1px solid black;
     margin-left: auto;
     margin-right: auto;

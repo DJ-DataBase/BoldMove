@@ -8,7 +8,7 @@
     <header>
       <%- include('../layout/header') %>
     </header>
-    <h3>~Yelp Search Results~</h3>
+    <h3>~Search Results~</h3>
     <ul>
       <%searchResults.forEach( yelp => {%>
         <li>
@@ -30,7 +30,7 @@
               <input type="hidden" value="<%= yelp.price %>" name="price">
               <input type="hidden" value="<%= yelp.image_url %>" name="image_url"> 
               <input type="hidden" value="<%= yelp.url %>" name="url"> 
-              <button class="generalButton" type="submit">Save to your Yelp list</button>
+              <button class="generalButton" type="submit">Save to your Results List</button>
             </form>
           </section>
       </li>
